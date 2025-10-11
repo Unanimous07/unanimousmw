@@ -61,6 +61,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     .services {
       padding: 6rem 0;
       background: white;
+      scroll-margin-top: 80px; /* Offset for fixed header */
     }
 
     .container {
@@ -220,16 +221,71 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     }
 
     @media (max-width: 768px) {
-      .services-grid {
-        grid-template-columns: 1fr;
+      .services {
+        padding: 4rem 0 3rem;
       }
-      
+
+      .container {
+        padding: 0 1.5rem;
+      }
+
+      .section-header {
+        margin-bottom: 2.5rem;
+      }
+
       .section-header h2 {
         font-size: 2rem;
       }
 
+      .section-header p {
+        font-size: 1rem;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
       .service-category h3 {
         font-size: 1.5rem;
+      }
+
+      .service-item {
+        padding: 1rem;
+      }
+
+      .cta-section {
+        padding: 2rem 1.5rem;
+      }
+
+      .cta-section h3 {
+        font-size: 1.5rem;
+      }
+
+      .cta-section p {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .services {
+        padding: 3rem 0 2rem;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+
+      .section-header h2 {
+        font-size: 1.75rem;
+      }
+
+      .service-category h3 {
+        font-size: 1.25rem;
+      }
+
+      .cta-section {
+        padding: 1.5rem 1rem;
       }
     }
   `]

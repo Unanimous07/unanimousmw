@@ -1,0 +1,7 @@
+# .gitignore additions for deployment
+/dist
+/.angular/cache
+/.vercel
+/.netlify
+.env.local
+.env.production.local

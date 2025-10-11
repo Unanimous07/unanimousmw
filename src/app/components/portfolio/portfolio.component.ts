@@ -37,6 +37,7 @@ import { PortfolioService, PortfolioFolder } from '../../services/portfolio.serv
     .portfolio {
       padding: 6rem 0;
       background: #f8fafc;
+      scroll-margin-top: 80px; /* Offset for fixed header */
     }
 
     .container {
@@ -135,12 +136,55 @@ import { PortfolioService, PortfolioFolder } from '../../services/portfolio.serv
     }
 
     @media (max-width: 768px) {
-      .portfolio-grid {
-        grid-template-columns: 1fr;
+      .portfolio {
+        padding: 4rem 0 3rem;
       }
-      
+
+      .container {
+        padding: 0 1.5rem;
+      }
+
+      .section-header {
+        margin-bottom: 2.5rem;
+      }
+
       .section-header h2 {
         font-size: 2rem;
+      }
+
+      .section-header p {
+        font-size: 1rem;
+      }
+
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .portfolio-image {
+        height: 200px;
+      }
+
+      .portfolio-overlay {
+        padding: 1.5rem;
+      }
+
+      .portfolio-overlay h3 {
+        font-size: 1.25rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .portfolio {
+        padding: 3rem 0 2rem;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+
+      .section-header h2 {
+        font-size: 1.75rem;
       }
     }
   `]

@@ -38,12 +38,13 @@ import { PLATFORM_ID } from '@angular/core';
       background: linear-gradient(135deg, #fbb51d 0%, #fd6a0a 100%);
       position: relative;
       overflow: hidden;
+      padding-top: 80px; /* Account for fixed header */
     }
 
     .hero-content {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 2rem;
+      padding: 2rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4rem;
@@ -159,23 +160,63 @@ import { PLATFORM_ID } from '@angular/core';
     }
 
     @media (max-width: 768px) {
+      .hero {
+        padding-top: 180px; /* Extra padding on mobile to clear fixed header */
+        min-height: auto;
+        padding-bottom: 3rem;
+      }
+
       .hero-content {
         grid-template-columns: 1fr;
         text-align: center;
         gap: 2rem;
+        padding: 1.5rem;
+        padding-top: 3rem; /* Additional top padding for content */
       }
 
       .hero-title {
         font-size: 2.5rem;
+        line-height: 1.2;
+        margin-top: 2rem; /* Add top margin to title */
+      }
+
+      .hero-description {
+        font-size: 1rem;
       }
 
       .hero-visual {
-        height: 300px;
+        height: 250px;
       }
 
       .hero-buttons {
         flex-direction: column;
         align-items: center;
+        gap: 1rem;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 280px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding-top: 200px; /* Even more padding on very small screens */
+      }
+
+      .hero-content {
+        padding: 1rem;
+        padding-top: 3.5rem; /* Extra padding for small screens */
+      }
+
+      .hero-title {
+        font-size: 2rem;
+        margin-top: 2.5rem; /* More margin on small screens */
+      }
+
+      .hero-description {
+        font-size: 0.95rem;
       }
     }
   `]
@@ -212,14 +253,14 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     const particleCount = this.getParticleCount();
     this.particles = this.createParticles(particleCount);
 
-  // Event listeners on the section so canvas can keep pointer-events: none
-  const target = this.heroRef?.nativeElement || canvas;
-  target.addEventListener('mousemove', this.onMouseMove, { passive: true });
-  target.addEventListener('mouseleave', this.onMouseLeave, { passive: true });
-  target.addEventListener('click', this.onClick);
-  target.addEventListener('touchstart', this.onTouchStart, { passive: true });
-  target.addEventListener('touchmove', this.onTouchMove, { passive: true });
-  target.addEventListener('touchend', this.onTouchEnd, { passive: true });
+    // Event listeners on the section so canvas can keep pointer-events: none
+    const target = this.heroRef?.nativeElement || canvas;
+    target.addEventListener('mousemove', this.onMouseMove, { passive: true });
+    target.addEventListener('mouseleave', this.onMouseLeave, { passive: true });
+    target.addEventListener('click', this.onClick);
+    target.addEventListener('touchstart', this.onTouchStart, { passive: true });
+    target.addEventListener('touchmove', this.onTouchMove, { passive: true });
+    target.addEventListener('touchend', this.onTouchEnd, { passive: true });
 
     // Resize observer to track container size changes
     const container = canvas.parentElement as HTMLElement | null;
@@ -323,8 +364,8 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     ctx.fillRect(0, 0, w, h);
 
     // Update & draw particles
-  const mouseInfluenceRadius = 120;
-  const connectDist2 = 160 * 160;
+    const mouseInfluenceRadius = 120;
+    const connectDist2 = 160 * 160;
     const mX = this.mouse.x;
     const mY = this.mouse.y;
     const mouseActive = this.mouse.active;

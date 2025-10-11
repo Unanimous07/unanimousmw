@@ -102,6 +102,7 @@ import { CommonModule } from '@angular/common';
     .about {
       padding: 6rem 0;
       background: #f8fafc;
+      scroll-margin-top: 80px; /* Offset for fixed header */
     }
 
     .container {
@@ -270,24 +271,77 @@ import { CommonModule } from '@angular/common';
     }
 
     @media (max-width: 768px) {
+      .about {
+        padding: 4rem 0 3rem;
+      }
+
+      .container {
+        padding: 0 1.5rem;
+      }
+
       .about-content {
         grid-template-columns: 1fr;
         gap: 2rem;
+        margin-bottom: 3rem;
       }
 
       .about-text h2 {
         font-size: 2rem;
       }
 
+      .about-text p {
+        font-size: 1rem;
+      }
+
       .stats {
         justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .stat-item {
+        min-width: 120px;
       }
 
       .team-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .values-section {
+        padding: 3rem 1.5rem;
       }
 
       .values-section h3 {
+        font-size: 2rem;
+      }
+
+      .values-grid {
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .about {
+        padding: 3rem 0 2rem;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+
+      .about-text h2 {
+        font-size: 1.75rem;
+      }
+
+      .values-section {
+        padding: 2rem 1rem;
+      }
+
+      .values-section h3 {
+        font-size: 1.75rem;
+      }
+
+      .stat-item h3 {
         font-size: 2rem;
       }
     }
