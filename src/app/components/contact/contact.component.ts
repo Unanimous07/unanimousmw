@@ -130,6 +130,7 @@ import { PLATFORM_ID } from '@angular/core';
       height: 100%;
       pointer-events: none;
       z-index: 0;
+      opacity: 0.5;
     }
 
     .container {

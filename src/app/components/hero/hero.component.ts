@@ -51,7 +51,7 @@ import { PLATFORM_ID } from '@angular/core';
       align-items: center;
       width: 100%;
       position: relative;
-      z-index: 1;
+      z-index: 3;
     }
 
     .hero-title {
@@ -142,8 +142,10 @@ import { PLATFORM_ID } from '@angular/core';
       width: 100%;
       height: 100%;
       display: block;
-      z-index: 0;
-      pointer-events: none;
+      z-index: 2;
+      pointer-events: auto;
+      mix-blend-mode: screen;
+      opacity: 0.5;
     }
 
     @keyframes slideUp {
@@ -175,13 +177,13 @@ import { PLATFORM_ID } from '@angular/core';
       }
 
       .hero-title {
-        font-size: 2.5rem;
-        line-height: 1.2;
+        font-size: 4rem;
+        line-height: 1.15;
         margin-top: 2rem; /* Add top margin to title */
       }
 
       .hero-description {
-        font-size: 1rem;
+        font-size: 1.25rem;
       }
 
       .hero-visual {
@@ -211,12 +213,12 @@ import { PLATFORM_ID } from '@angular/core';
       }
 
       .hero-title {
-        font-size: 2rem;
+        font-size: 3.25rem;
         margin-top: 2.5rem; /* More margin on small screens */
       }
 
       .hero-description {
-        font-size: 0.95rem;
+        font-size: 1.15rem;
       }
     }
   `]
@@ -355,13 +357,8 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     const w = canvas.width / this.dpr;
     const h = canvas.height / this.dpr;
 
-    // Background subtle gradient
-    const grad = ctx.createLinearGradient(0, 0, w, h);
-    grad.addColorStop(0, 'rgba(255,255,255,0.15)');
-    grad.addColorStop(1, 'rgba(255,255,255,0.05)');
-    ctx.fillStyle = grad;
+    // Clear canvas for next frame
     ctx.clearRect(0, 0, w, h);
-    ctx.fillRect(0, 0, w, h);
 
     // Update & draw particles
     const mouseInfluenceRadius = 120;
@@ -396,8 +393,8 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
       }
     }
 
-    // Draw connections first (thin lines)
-    ctx.lineWidth = 1;
+    // Draw connections first (enhanced visibility)
+    ctx.lineWidth = 2;
     for (let i = 0; i < this.particles.length; i++) {
       const p1 = this.particles[i];
       for (let j = i + 1; j < this.particles.length; j++) {
@@ -407,7 +404,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
         const d2 = dx * dx + dy * dy;
         if (d2 < connectDist2) {
           const alpha = 1 - d2 / connectDist2;
-          ctx.strokeStyle = `rgba(255,255,255,${0.25 * alpha})`;
+          ctx.strokeStyle = `rgba(255,255,255,${0.5 * alpha})`;
           ctx.beginPath();
           ctx.moveTo(p1.x, p1.y);
           ctx.lineTo(p2.x, p2.y);
@@ -416,14 +413,22 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
       }
     }
 
-    // Draw particles
+    // Draw particles with enhanced glow
     for (const p of this.particles) {
-      const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 8);
-      glow.addColorStop(0, 'rgba(255,255,255,0.9)');
+      // Bright core
+      ctx.fillStyle = 'rgba(255,255,255,1)';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Enhanced glow
+      const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 15);
+      glow.addColorStop(0, 'rgba(255,255,255,0.8)');
+      glow.addColorStop(0.4, 'rgba(255,255,255,0.4)');
       glow.addColorStop(1, 'rgba(255,255,255,0)');
       ctx.fillStyle = glow;
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, p.size * 15, 0, Math.PI * 2);
       ctx.fill();
     }
   }
