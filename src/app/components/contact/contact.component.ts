@@ -32,7 +32,7 @@ import { FormsModule } from '@angular/forms';
               </div>
               <div>
                 <h4>Phone</h4>
-                <p>+1 (555) 123-4567</p>
+                <p>(+265) 998 997 400</p>
               </div>
             </div>
             <div class="contact-item">
@@ -41,7 +41,7 @@ import { FormsModule } from '@angular/forms';
               </div>
               <div>
                 <h4>Location</h4>
-                <p>Creative District, Design City</p>
+                <p>Blantyre Malawi</p>
               </div>
             </div>
             <div class="contact-item">

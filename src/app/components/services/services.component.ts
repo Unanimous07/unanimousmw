@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
@@ -20,8 +21,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
             <h3>Creative Design Services</h3>
             <div class="services-list">
               <div *ngFor="let service of designServices" class="service-item">
-                <div class="service-icon">
-                  <div class="icon-placeholder" [innerHTML]="getSafeHtml(service.icon)"></div>
+                <div class="service-icon" (click)="goToGallery(service.gallery)" style="cursor:pointer;">
+                  <img [src]="service.img" [alt]="service.title" style="width:40px;height:40px;border-radius:8px;object-fit:cover;cursor:pointer;" (click)="goToGallery(service.gallery)" />
                 </div>
                 <div class="service-content">
                   <h4>{{ service.title }}</h4>
@@ -234,7 +235,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   `]
 })
 export class ServicesComponent {
-  constructor(private sanitizer: DomSanitizer) {}
+  // ...existing code...
 
   getSafeHtml(html: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(html);
@@ -243,29 +244,41 @@ export class ServicesComponent {
     {
       title: 'Brand Identity Design',
       description: 'Complete brand identity packages including logos, color schemes, and brand guidelines',
-      icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'
+      img: '/assets/Logos/logo.png',
+      gallery: 'Branding'
     },
     {
       title: 'Print Design',
       description: 'Brochures, flyers, business cards, and all your print marketing materials',
-      icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/></svg>'
+      img: '/assets/posters/poster music.jpg',
+      gallery: 'posters'
     },
     {
       title: 'Digital Graphics',
       description: 'Social media graphics, web banners, and digital marketing materials',
-      icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4,6H20V16H4M20,18A2,2 0 0,0 22,16V6C22,4.89 21.1,4 20,4H4C2.89,4 2,4.89 2,6V16A2,2 0 0,0 4,18H0V20H24V18H20Z"/></svg>'
+      img: '/assets/Flyers/03.jpg',
+      gallery: 'Flyers'
     },
     {
       title: 'Packaging Design',
       description: 'Product packaging that stands out on shelves and tells your brand story',
-      icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12,2L13.09,8.26L22,9L14.5,15.74L16.91,22L12,18.5L7.09,22L9.5,15.74L2,9L10.91,8.26L12,2M12,6.5L11.5,8.5L9.5,8.8L11.2,10.4L10.8,12.5L12,11.8L13.2,12.5L12.8,10.4L14.5,8.8L12.5,8.5L12,6.5Z"/></svg>'
+      img: '/assets/Product stickers/STICKER.png',
+      gallery: 'Product stickers'
     },
     {
       title: 'Illustration',
       description: 'Custom illustrations for various applications and marketing needs',
-      icon: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29"/></svg>'
+      img: '/assets/Logos/logo_white.png',
+      gallery: 'Logos'
     }
   ];
+  constructor(private sanitizer: DomSanitizer, private router: Router) {}
+
+  goToGallery(folder: string) {
+    // Use Angular router to navigate to the correct gallery route
+    // The route is /portfolio/:category
+    this.router.navigate([`/portfolio/${folder}`]);
+  }
 
   techServices = [
     {

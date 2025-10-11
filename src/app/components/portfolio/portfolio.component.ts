@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { PortfolioService, PortfolioFolder } from '../../services/portfolio.service';
 
 @Component({
   selector: 'app-portfolio',
@@ -13,29 +15,17 @@ import { CommonModule } from '@angular/common';
           <p>Showcasing our finest graphic design work and creative solutions</p>
         </div>
 
-        <div class="filter-tabs">
-          <button 
-            *ngFor="let category of categories" 
-            class="filter-btn"
-            [class.active]="activeCategory === category"
-            (click)="filterPortfolio(category)">
-            {{ category }}
-          </button>
-        </div>
-
         <div class="portfolio-grid">
           <div 
-            *ngFor="let item of filteredPortfolio" 
+            *ngFor="let folder of portfolioFolders" 
             class="portfolio-item"
-            [attr.data-category]="item.category">
+            (click)="viewPortfolio(folder.name)">
             <div class="portfolio-image">
-              <div class="placeholder-image" [style.background]="item.color">
-                <span class="placeholder-text">{{ item.title }}</span>
-              </div>
+              <img [src]="folder.thumbnail" [alt]="folder.name" class="portfolio-img" loading="lazy">
               <div class="portfolio-overlay">
-                <h3>{{ item.title }}</h3>
-                <p>{{ item.description }}</p>
-                <span class="category-tag">{{ item.category }}</span>
+                <h3>{{ folder.name }}</h3>
+                <p>{{ folder.description }}</p>
+                <span class="category-tag">{{ folder.itemCount }} items</span>
               </div>
             </div>
           </div>
@@ -74,33 +64,6 @@ import { CommonModule } from '@angular/common';
       margin: 0 auto;
     }
 
-    .filter-tabs {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 3rem;
-      flex-wrap: wrap;
-    }
-
-    .filter-btn {
-      padding: 0.8rem 1.5rem;
-      border: 2px solid #e2e8f0;
-      background: white;
-      color: #64748b;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: 500;
-    }
-
-    .filter-btn:hover,
-    .filter-btn.active {
-      background: #fd6a0a;
-      color: white;
-      border-color: #fd6a0a;
-      transform: translateY(-2px);
-    }
-
     .portfolio-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -113,6 +76,7 @@ import { CommonModule } from '@angular/common';
       box-shadow: 0 5px 20px rgba(0,0,0,0.1);
       transition: transform 0.3s ease;
       background: white;
+      cursor: pointer;
     }
 
     .portfolio-item:hover {
@@ -125,16 +89,15 @@ import { CommonModule } from '@angular/common';
       overflow: hidden;
     }
 
-    .placeholder-image {
+    .portfolio-img {
       width: 100%;
       height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      font-size: 1.2rem;
-      font-weight: 600;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .portfolio-item:hover .portfolio-img {
+      transform: scale(1.05);
     }
 
     .portfolio-overlay {
@@ -182,57 +145,16 @@ import { CommonModule } from '@angular/common';
     }
   `]
 })
-export class PortfolioComponent {
-  categories = ['All', 'Branding', 'Print Design', 'Digital', 'Packaging'];
-  activeCategory = 'All';
+export class PortfolioComponent implements OnInit {
+  portfolioFolders: PortfolioFolder[] = [];
+  
+  constructor(private router: Router, private portfolioService: PortfolioService) {}
 
-  portfolioItems = [
-    {
-      title: 'Modern Brand Identity',
-      description: 'Complete branding package for tech startup',
-      category: 'Branding',
-      color: 'linear-gradient(135deg, #fbb51d 0%, #fd6a0a 100%)'
-    },
-    {
-      title: 'Annual Report Design',
-      description: 'Corporate annual report with infographics',
-      category: 'Print Design',
-      color: 'linear-gradient(135deg, #fbb51d 0%, #fd6a0a 100%)'
-    },
-    {
-      title: 'E-commerce Website',
-      description: 'Modern e-commerce platform design',
-      category: 'Digital',
-      color: 'linear-gradient(135deg, #fd6a0a 0%, #fbb51d 100%)'
-    },
-    {
-      title: 'Product Packaging',
-      description: 'Sustainable packaging design for organic products',
-      category: 'Packaging',
-      color: 'linear-gradient(135deg, #fbb51d 0%, #fd6a0a 100%)'
-    },
-    {
-      title: 'Logo Collection',
-      description: 'Various logo designs for different industries',
-      category: 'Branding',
-      color: 'linear-gradient(135deg, #fd6a0a 0%, #fbb51d 100%)'
-    },
-    {
-      title: 'Magazine Layout',
-      description: 'Editorial design for lifestyle magazine',
-      category: 'Print Design',
-      color: 'linear-gradient(135deg, #fbb51d 0%, #fd6a0a 100%)'
-    }
-  ];
+  ngOnInit() {
+    this.portfolioFolders = this.portfolioService.getPortfolioFolders();
+  }
 
-  filteredPortfolio = this.portfolioItems;
-
-  filterPortfolio(category: string) {
-    this.activeCategory = category;
-    if (category === 'All') {
-      this.filteredPortfolio = this.portfolioItems;
-    } else {
-      this.filteredPortfolio = this.portfolioItems.filter(item => item.category === category);
-    }
+  viewPortfolio(folderName: string) {
+    this.router.navigate(['/portfolio', folderName]);
   }
 }

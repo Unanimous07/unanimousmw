@@ -1,0 +1,1017 @@
+{
+  "type": "folder",
+  "name": "Home",
+  "path": "",
+  "children": [
+    {
+      "type": "folder",
+      "name": "banners",
+      "path": "banners",
+      "children": [
+        {
+          "type": "file",
+          "name": "2 (1).jpg",
+          "path": "banners/2 (1).jpg",
+          "url": "/assets/banners/2 (1).jpg"
+        },
+        {
+          "type": "file",
+          "name": "4.jpg",
+          "path": "banners/4.jpg",
+          "url": "/assets/banners/4.jpg"
+        },
+        {
+          "type": "file",
+          "name": "banner2.jpg",
+          "path": "banners/banner2.jpg",
+          "url": "/assets/banners/banner2.jpg"
+        },
+        {
+          "type": "file",
+          "name": "Billboard_Mockup_3.jpg",
+          "path": "banners/Billboard_Mockup_3.jpg",
+          "url": "/assets/banners/Billboard_Mockup_3.jpg"
+        },
+        {
+          "type": "file",
+          "name": "Roll up banner.jpg",
+          "path": "banners/Roll up banner.jpg",
+          "url": "/assets/banners/Roll up banner.jpg"
+        }
+      ],
+      "coverUrl": "/assets/banners/2 (1).jpg"
+    },
+    {
+      "type": "folder",
+      "name": "Branding",
+      "path": "Branding",
+      "children": [
+        {
+          "type": "folder",
+          "name": "Biosus",
+          "path": "Branding/Biosus",
+          "children": [
+            {
+              "type": "file",
+              "name": "business card.jpg",
+              "path": "Branding/Biosus/business card.jpg",
+              "url": "/assets/Branding/Biosus/business card.jpg"
+            },
+            {
+              "type": "file",
+              "name": "new poster.jpg",
+              "path": "Branding/Biosus/new poster.jpg",
+              "url": "/assets/Branding/Biosus/new poster.jpg"
+            },
+            {
+              "type": "file",
+              "name": "tshirt front black.jpg",
+              "path": "Branding/Biosus/tshirt front black.jpg",
+              "url": "/assets/Branding/Biosus/tshirt front black.jpg"
+            },
+            {
+              "type": "file",
+              "name": "tshirt front red.jpg",
+              "path": "Branding/Biosus/tshirt front red.jpg",
+              "url": "/assets/Branding/Biosus/tshirt front red.jpg"
+            }
+          ],
+          "coverUrl": "/assets/Branding/Biosus/business card.jpg"
+        },
+        {
+          "type": "folder",
+          "name": "DYD Mphangamo",
+          "path": "Branding/DYD Mphangamo",
+          "children": [
+            {
+              "type": "file",
+              "name": "cap 1.jpg",
+              "path": "Branding/DYD Mphangamo/cap 1.jpg",
+              "url": "/assets/Branding/DYD Mphangamo/cap 1.jpg"
+            },
+            {
+              "type": "file",
+              "name": "cap new.jpg",
+              "path": "Branding/DYD Mphangamo/cap new.jpg",
+              "url": "/assets/Branding/DYD Mphangamo/cap new.jpg"
+            },
+            {
+              "type": "file",
+              "name": "FISHER.jpg",
+              "path": "Branding/DYD Mphangamo/FISHER.jpg",
+              "url": "/assets/Branding/DYD Mphangamo/FISHER.jpg"
+            },
+            {
+              "type": "file",
+              "name": "golf shirt.jpg",
+              "path": "Branding/DYD Mphangamo/golf shirt.jpg",
+              "url": "/assets/Branding/DYD Mphangamo/golf shirt.jpg"
+            }
+          ],
+          "coverUrl": "/assets/Branding/DYD Mphangamo/cap 1.jpg"
+        },
+        {
+          "type": "folder",
+          "name": "IOT fixing",
+          "path": "Branding/IOT fixing",
+          "children": [
+            {
+              "type": "file",
+              "name": "bkue on white.jpg",
+              "path": "Branding/IOT fixing/bkue on white.jpg",
+              "url": "/assets/Branding/IOT fixing/bkue on white.jpg"
+            },
+            {
+              "type": "file",
+              "name": "black on blue.jpg",
+              "path": "Branding/IOT fixing/black on blue.jpg",
+              "url": "/assets/Branding/IOT fixing/black on blue.jpg"
+            },
+            {
+              "type": "file",
+              "name": "blue on black.jpg",
+              "path": "Branding/IOT fixing/blue on black.jpg",
+              "url": "/assets/Branding/IOT fixing/blue on black.jpg"
+            },
+            {
+              "type": "file",
+              "name": "BOTTLE.jpg",
+              "path": "Branding/IOT fixing/BOTTLE.jpg",
+              "url": "/assets/Branding/IOT fixing/BOTTLE.jpg"
+            },
+            {
+              "type": "file",
+              "name": "cap black.jpg",
+              "path": "Branding/IOT fixing/cap black.jpg",
+              "url": "/assets/Branding/IOT fixing/cap black.jpg"
+            },
+            {
+              "type": "file",
+              "name": "cap white.jpg",
+              "path": "Branding/IOT fixing/cap white.jpg",
+              "url": "/assets/Branding/IOT fixing/cap white.jpg"
+            },
+            {
+              "type": "file",
+              "name": "Free_ID_Badge_Holder_Mockup_4.jpg",
+              "path": "Branding/IOT fixing/Free_ID_Badge_Holder_Mockup_4.jpg",
+              "url": "/assets/Branding/IOT fixing/Free_ID_Badge_Holder_Mockup_4.jpg"
+            },
+            {
+              "type": "file",
+              "name": "Lanyard.jpg",
+              "path": "Branding/IOT fixing/Lanyard.jpg",
+              "url": "/assets/Branding/IOT fixing/Lanyard.jpg"
+            },
+            {
+              "type": "file",
+              "name": "logo_black.png",
+              "path": "Branding/IOT fixing/logo_black.png",
+              "url": "/assets/Branding/IOT fixing/logo_black.png"
+            },
+            {
+              "type": "file",
+              "name": "logo_green.png",
+              "path": "Branding/IOT fixing/logo_green.png",
+              "url": "/assets/Branding/IOT fixing/logo_green.png"
+            },
+            {
+              "type": "file",
+              "name": "logo_white.png",
+              "path": "Branding/IOT fixing/logo_white.png",
+              "url": "/assets/Branding/IOT fixing/logo_white.png"
+            },
+            {
+              "type": "file",
+              "name": "tshirt 2.jpg",
+              "path": "Branding/IOT fixing/tshirt 2.jpg",
+              "url": "/assets/Branding/IOT fixing/tshirt 2.jpg"
+            },
+            {
+              "type": "file",
+              "name": "tshirt front (1).jpg",
+              "path": "Branding/IOT fixing/tshirt front (1).jpg",
+              "url": "/assets/Branding/IOT fixing/tshirt front (1).jpg"
+            },
+            {
+              "type": "file",
+              "name": "tshirt white.jpg",
+              "path": "Branding/IOT fixing/tshirt white.jpg",
+              "url": "/assets/Branding/IOT fixing/tshirt white.jpg"
+            },
+            {
+              "type": "file",
+              "name": "white on black.jpg",
+              "path": "Branding/IOT fixing/white on black.jpg",
+              "url": "/assets/Branding/IOT fixing/white on black.jpg"
+            },
+            {
+              "type": "file",
+              "name": "white on blue.jpg",
+              "path": "Branding/IOT fixing/white on blue.jpg",
+              "url": "/assets/Branding/IOT fixing/white on blue.jpg"
+            }
+          ],
+          "coverUrl": "/assets/Branding/IOT fixing/bkue on white.jpg"
+        },
+        {
+          "type": "folder",
+          "name": "Parabolic",
+          "path": "Branding/Parabolic",
+          "children": [
+            {
+              "type": "file",
+              "name": "1 (2).jpg",
+              "path": "Branding/Parabolic/1 (2).jpg",
+              "url": "/assets/Branding/Parabolic/1 (2).jpg"
+            },
+            {
+              "type": "file",
+              "name": "3 (1).jpg",
+              "path": "Branding/Parabolic/3 (1).jpg",
+              "url": "/assets/Branding/Parabolic/3 (1).jpg"
+            },
+            {
+              "type": "file",
+              "name": "4.jpg",
+              "path": "Branding/Parabolic/4.jpg",
+              "url": "/assets/Branding/Parabolic/4.jpg"
+            },
+            {
+              "type": "file",
+              "name": "birthday.jpg",
+              "path": "Branding/Parabolic/birthday.jpg",
+              "url": "/assets/Branding/Parabolic/birthday.jpg"
+            },
+            {
+              "type": "file",
+              "name": "busines 1.jpg",
+              "path": "Branding/Parabolic/busines 1.jpg",
+              "url": "/assets/Branding/Parabolic/busines 1.jpg"
+            },
+            {
+              "type": "file",
+              "name": "flyer (2).jpg",
+              "path": "Branding/Parabolic/flyer (2).jpg",
+              "url": "/assets/Branding/Parabolic/flyer (2).jpg"
+            },
+            {
+              "type": "file",
+              "name": "front.jpg",
+              "path": "Branding/Parabolic/front.jpg",
+              "url": "/assets/Branding/Parabolic/front.jpg"
+            },
+            {
+              "type": "file",
+              "name": "HIRING.jpg",
+              "path": "Branding/Parabolic/HIRING.jpg",
+              "url": "/assets/Branding/Parabolic/HIRING.jpg"
+            },
+            {
+              "type": "file",
+              "name": "independence.jpg",
+              "path": "Branding/Parabolic/independence.jpg",
+              "url": "/assets/Branding/Parabolic/independence.jpg"
+            },
+            {
+              "type": "file",
+              "name": "MAIZE.png",
+              "path": "Branding/Parabolic/MAIZE.png",
+              "url": "/assets/Branding/Parabolic/MAIZE.png"
+            },
+            {
+              "type": "file",
+              "name": "Roll up banner.jpg",
+              "path": "Branding/Parabolic/Roll up banner.jpg",
+              "url": "/assets/Branding/Parabolic/Roll up banner.jpg"
+            },
+            {
+              "type": "file",
+              "name": "STICKER.png",
+              "path": "Branding/Parabolic/STICKER.png",
+              "url": "/assets/Branding/Parabolic/STICKER.png"
+            },
+            {
+              "type": "file",
+              "name": "SUNFLOWER.png",
+              "path": "Branding/Parabolic/SUNFLOWER.png",
+              "url": "/assets/Branding/Parabolic/SUNFLOWER.png"
+            }
+          ],
+          "coverUrl": "/assets/Branding/Parabolic/1 (2).jpg"
+        },
+        {
+          "type": "folder",
+          "name": "zathu",
+          "path": "Branding/zathu",
+          "children": [
+            {
+              "type": "file",
+              "name": "bag.jpg",
+              "path": "Branding/zathu/bag.jpg",
+              "url": "/assets/Branding/zathu/bag.jpg"
+            },
+            {
+              "type": "file",
+              "name": "blacelate.jpg",
+              "path": "Branding/zathu/blacelate.jpg",
+              "url": "/assets/Branding/zathu/blacelate.jpg"
+            },
+            {
+              "type": "file",
+              "name": "Blank billboard.jpg",
+              "path": "Branding/zathu/Blank billboard.jpg",
+              "url": "/assets/Branding/zathu/Blank billboard.jpg"
+            },
+            {
+              "type": "file",
+              "name": "bottle (1).jpg",
+              "path": "Branding/zathu/bottle (1).jpg",
+              "url": "/assets/Branding/zathu/bottle (1).jpg"
+            },
+            {
+              "type": "file",
+              "name": "business (1).jpg",
+              "path": "Branding/zathu/business (1).jpg",
+              "url": "/assets/Branding/zathu/business (1).jpg"
+            },
+            {
+              "type": "file",
+              "name": "business.jpg",
+              "path": "Branding/zathu/business.jpg",
+              "url": "/assets/Branding/zathu/business.jpg"
+            },
+            {
+              "type": "file",
+              "name": "cap.jpg",
+              "path": "Branding/zathu/cap.jpg",
+              "url": "/assets/Branding/zathu/cap.jpg"
+            },
+            {
+              "type": "file",
+              "name": "Fisher jacket.jpg",
+              "path": "Branding/zathu/Fisher jacket.jpg",
+              "url": "/assets/Branding/zathu/Fisher jacket.jpg"
+            },
+            {
+              "type": "file",
+              "name": "holder (1).jpg",
+              "path": "Branding/zathu/holder (1).jpg",
+              "url": "/assets/Branding/zathu/holder (1).jpg"
+            },
+            {
+              "type": "file",
+              "name": "holder.jpg",
+              "path": "Branding/zathu/holder.jpg",
+              "url": "/assets/Branding/zathu/holder.jpg"
+            },
+            {
+              "type": "file",
+              "name": "sign.jpg",
+              "path": "Branding/zathu/sign.jpg",
+              "url": "/assets/Branding/zathu/sign.jpg"
+            },
+            {
+              "type": "file",
+              "name": "tie.jpg",
+              "path": "Branding/zathu/tie.jpg",
+              "url": "/assets/Branding/zathu/tie.jpg"
+            },
+            {
+              "type": "file",
+              "name": "tshirt.jpg",
+              "path": "Branding/zathu/tshirt.jpg",
+              "url": "/assets/Branding/zathu/tshirt.jpg"
+            }
+          ],
+          "coverUrl": "/assets/Branding/zathu/bag.jpg"
+        }
+      ],
+      "coverUrl": "/assets/Branding/Biosus/business card.jpg"
+    },
+    {
+      "type": "folder",
+      "name": "business cards",
+      "path": "business cards",
+      "children": [
+        {
+          "type": "file",
+          "name": "a4-paper-mockup.jpg",
+          "path": "business cards/a4-paper-mockup.jpg",
+          "url": "/assets/business cards/a4-paper-mockup.jpg"
+        },
+        {
+          "type": "file",
+          "name": "business card.jpg",
+          "path": "business cards/business card.jpg",
+          "url": "/assets/business cards/business card.jpg"
+        }
+      ],
+      "coverUrl": "/assets/business cards/a4-paper-mockup.jpg"
+    },
+    {
+      "type": "folder",
+      "name": "Business profile",
+      "path": "Business profile",
+      "children": [
+        {
+          "type": "file",
+          "name": "0004 Free Softcover Book Mockup.jpg",
+          "path": "Business profile/0004 Free Softcover Book Mockup.jpg",
+          "url": "/assets/Business profile/0004 Free Softcover Book Mockup.jpg"
+        },
+        {
+          "type": "file",
+          "name": "0012 Free Softcover Book Mockup.jpg",
+          "path": "Business profile/0012 Free Softcover Book Mockup.jpg",
+          "url": "/assets/Business profile/0012 Free Softcover Book Mockup.jpg"
+        },
+        {
+          "type": "file",
+          "name": "busines 1.jpg",
+          "path": "Business profile/busines 1.jpg",
+          "url": "/assets/Business profile/busines 1.jpg"
+        }
+      ],
+      "coverUrl": "/assets/Business profile/0004 Free Softcover Book Mockup.jpg"
+    },
+    {
+      "type": "folder",
+      "name": "Caps",
+      "path": "Caps",
+      "children": [
+        {
+          "type": "file",
+          "name": "cap 1.jpg",
+          "path": "Caps/cap 1.jpg",
+          "url": "/assets/Caps/cap 1.jpg"
+        },
+        {
+          "type": "file",
+          "name": "cap black.jpg",
+          "path": "Caps/cap black.jpg",
+          "url": "/assets/Caps/cap black.jpg"
+        },
+        {
+          "type": "file",
+          "name": "cap new.jpg",
+          "path": "Caps/cap new.jpg",
+          "url": "/assets/Caps/cap new.jpg"
+        },
+        {
+          "type": "file",
+          "name": "cap white.jpg",
+          "path": "Caps/cap white.jpg",
+          "url": "/assets/Caps/cap white.jpg"
+        },
+        {
+          "type": "file",
+          "name": "cap.jpg",
+          "path": "Caps/cap.jpg",
+          "url": "/assets/Caps/cap.jpg"
+        }
+      ],
+      "coverUrl": "/assets/Caps/cap 1.jpg"
+    },
+    {
+      "type": "folder",
+      "name": "CEO photo",
+      "path": "CEO photo",
+      "children": [
+        {
+          "type": "file",
+          "name": "Layer 6.png",
+          "path": "CEO photo/Layer 6.png",
+          "url": "/assets/CEO photo/Layer 6.png"
+        }
+      ],
+      "coverUrl": "/assets/CEO photo/Layer 6.png"
+    },
+    {
+      "type": "folder",
+      "name": "Flyers",
+      "path": "Flyers",
+      "children": [
+        {
+          "type": "file",
+          "name": "01.jpg",
+          "path": "Flyers/01.jpg",
+          "url": "/assets/Flyers/01.jpg"
+        },
+        {
+          "type": "file",
+          "name": "03.jpg",
+          "path": "Flyers/03.jpg",
+          "url": "/assets/Flyers/03.jpg"
+        },
+        {
+          "type": "file",
+          "name": "08.jpg",
+          "path": "Flyers/08.jpg",
+          "url": "/assets/Flyers/08.jpg"
+        },
+        {
+          "type": "file",
+          "name": "8 march.jpg",
+          "path": "Flyers/8 march.jpg",
+          "url": "/assets/Flyers/8 march.jpg"
+        },
+        {
+          "type": "file",
+          "name": "a52 flyer.jpg",
+          "path": "Flyers/a52 flyer.jpg",
+          "url": "/assets/Flyers/a52 flyer.jpg"
+        },
+        {
+          "type": "file",
+          "name": "birthday.jpg",
+          "path": "Flyers/birthday.jpg",
+          "url": "/assets/Flyers/birthday.jpg"
+        },
+        {
+          "type": "file",
+          "name": "christianity and youth.jpg",
+          "path": "Flyers/christianity and youth.jpg",
+          "url": "/assets/Flyers/christianity and youth.jpg"
+        },
+        {
+          "type": "file",
+          "name": "easter.jpg",
+          "path": "Flyers/easter.jpg",
+          "url": "/assets/Flyers/easter.jpg"
+        },
+        {
+          "type": "file",
+          "name": "flyer (1).jpg",
+          "path": "Flyers/flyer (1).jpg",
+          "url": "/assets/Flyers/flyer (1).jpg"
+        },
+        {
+          "type": "file",
+          "name": "flyer (2).jpg",
+          "path": "Flyers/flyer (2).jpg",
+          "url": "/assets/Flyers/flyer (2).jpg"
+        },
+        {
+          "type": "file",
+          "name": "flyer (3).jpg",
+          "path": "Flyers/flyer (3).jpg",
+          "url": "/assets/Flyers/flyer (3).jpg"
+        },
+        {
+          "type": "file",
+          "name": "flyer (4).jpg",
+          "path": "Flyers/flyer (4).jpg",
+          "url": "/assets/Flyers/flyer (4).jpg"
+        },
+        {
+          "type": "file",
+          "name": "flyer 3.jpg",
+          "path": "Flyers/flyer 3.jpg",
+          "url": "/assets/Flyers/flyer 3.jpg"
+        },
+        {
+          "type": "file",
+          "name": "flyer-Recovered.jpg",
+          "path": "Flyers/flyer-Recovered.jpg",
+          "url": "/assets/Flyers/flyer-Recovered.jpg"
+        },
+        {
+          "type": "file",
+          "name": "flyer.jpg",
+          "path": "Flyers/flyer.jpg",
+          "url": "/assets/Flyers/flyer.jpg"
+        },
+        {
+          "type": "file",
+          "name": "independence.jpg",
+          "path": "Flyers/independence.jpg",
+          "url": "/assets/Flyers/independence.jpg"
+        },
+        {
+          "type": "file",
+          "name": "invite.jpg",
+          "path": "Flyers/invite.jpg",
+          "url": "/assets/Flyers/invite.jpg"
+        },
+        {
+          "type": "file",
+          "name": "mothers.jpg",
+          "path": "Flyers/mothers.jpg",
+          "url": "/assets/Flyers/mothers.jpg"
+        },
+        {
+          "type": "file",
+          "name": "Nasheko chicks.jpg",
+          "path": "Flyers/Nasheko chicks.jpg",
+          "url": "/assets/Flyers/Nasheko chicks.jpg"
+        },
+        {
+          "type": "file",
+          "name": "newwish.jpg",
+          "path": "Flyers/newwish.jpg",
+          "url": "/assets/Flyers/newwish.jpg"
+        },
+        {
+          "type": "file",
+          "name": "now2.jpg",
+          "path": "Flyers/now2.jpg",
+          "url": "/assets/Flyers/now2.jpg"
+        },
+        {
+          "type": "file",
+          "name": "poster (1).jpg",
+          "path": "Flyers/poster (1).jpg",
+          "url": "/assets/Flyers/poster (1).jpg"
+        },
+        {
+          "type": "file",
+          "name": "poster.jpg",
+          "path": "Flyers/poster.jpg",
+          "url": "/assets/Flyers/poster.jpg"
+        },
+        {
+          "type": "file",
+          "name": "question box.jpg",
+          "path": "Flyers/question box.jpg",
+          "url": "/assets/Flyers/question box.jpg"
+        },
+        {
+          "type": "file",
+          "name": "saloon.jpg",
+          "path": "Flyers/saloon.jpg",
+          "url": "/assets/Flyers/saloon.jpg"
+        },
+        {
+          "type": "file",
+          "name": "website2.jpg",
+          "path": "Flyers/website2.jpg",
+          "url": "/assets/Flyers/website2.jpg"
+        },
+        {
+          "type": "file",
+          "name": "wish2.jpg",
+          "path": "Flyers/wish2.jpg",
+          "url": "/assets/Flyers/wish2.jpg"
+        }
+      ],
+      "coverUrl": "/assets/Flyers/01.jpg"
+    },
+    {
+      "type": "folder",
+      "name": "Invitations",
+      "path": "Invitations",
+      "children": [
+        {
+          "type": "file",
+          "name": "card 2.jpg",
+          "path": "Invitations/card 2.jpg",
+          "url": "/assets/Invitations/card 2.jpg"
+        },
+        {
+          "type": "file",
+          "name": "Save the date 2 (1).jpg",
+          "path": "Invitations/Save the date 2 (1).jpg",
+          "url": "/assets/Invitations/Save the date 2 (1).jpg"
+        },
+        {
+          "type": "file",
+          "name": "Save the date 3.jpg",
+          "path": "Invitations/Save the date 3.jpg",
+          "url": "/assets/Invitations/Save the date 3.jpg"
+        },
+        {
+          "type": "file",
+          "name": "save the.png",
+          "path": "Invitations/save the.png",
+          "url": "/assets/Invitations/save the.png"
+        }
+      ],
+      "coverUrl": "/assets/Invitations/card 2.jpg"
+    },
+    {
+      "type": "folder",
+      "name": "Logos",
+      "path": "Logos",
+      "children": [
+        {
+          "type": "file",
+          "name": "3.jpg",
+          "path": "Logos/3.jpg",
+          "url": "/assets/Logos/3.jpg"
+        },
+        {
+          "type": "file",
+          "name": "holder (1).jpg",
+          "path": "Logos/holder (1).jpg",
+          "url": "/assets/Logos/holder (1).jpg"
+        },
+        {
+          "type": "file",
+          "name": "Kwathu.png",
+          "path": "Logos/Kwathu.png",
+          "url": "/assets/Logos/Kwathu.png"
+        },
+        {
+          "type": "file",
+          "name": "LOGO 2.png",
+          "path": "Logos/LOGO 2.png",
+          "url": "/assets/Logos/LOGO 2.png"
+        },
+        {
+          "type": "file",
+          "name": "logo_black.png",
+          "path": "Logos/logo_black.png",
+          "url": "/assets/Logos/logo_black.png"
+        },
+        {
+          "type": "file",
+          "name": "logo_green.png",
+          "path": "Logos/logo_green.png",
+          "url": "/assets/Logos/logo_green.png"
+        },
+        {
+          "type": "file",
+          "name": "logo_white.png",
+          "path": "Logos/logo_white.png",
+          "url": "/assets/Logos/logo_white.png"
+        },
+        {
+          "type": "file",
+          "name": "logo.png",
+          "path": "Logos/logo.png",
+          "url": "/assets/Logos/logo.png"
+        },
+        {
+          "type": "file",
+          "name": "logo2.jpg",
+          "path": "Logos/logo2.jpg",
+          "url": "/assets/Logos/logo2.jpg"
+        },
+        {
+          "type": "file",
+          "name": "mine.png",
+          "path": "Logos/mine.png",
+          "url": "/assets/Logos/mine.png"
+        },
+        {
+          "type": "file",
+          "name": "sign.jpg",
+          "path": "Logos/sign.jpg",
+          "url": "/assets/Logos/sign.jpg"
+        },
+        {
+          "type": "file",
+          "name": "sprout.jpg",
+          "path": "Logos/sprout.jpg",
+          "url": "/assets/Logos/sprout.jpg"
+        },
+        {
+          "type": "file",
+          "name": "Yanga.png",
+          "path": "Logos/Yanga.png",
+          "url": "/assets/Logos/Yanga.png"
+        }
+      ],
+      "coverUrl": "/assets/Logos/3.jpg"
+    },
+    {
+      "type": "folder",
+      "name": "our logo",
+      "path": "our logo",
+      "children": [
+        {
+          "type": "file",
+          "name": "black.png",
+          "path": "our logo/black.png",
+          "url": "/assets/our logo/black.png"
+        },
+        {
+          "type": "file",
+          "name": "white.png",
+          "path": "our logo/white.png",
+          "url": "/assets/our logo/white.png"
+        }
+      ],
+      "coverUrl": "/assets/our logo/black.png"
+    },
+    {
+      "type": "folder",
+      "name": "Portfolio",
+      "path": "Portfolio",
+      "children": []
+    },
+    {
+      "type": "folder",
+      "name": "posters",
+      "path": "posters",
+      "children": [
+        {
+          "type": "file",
+          "name": "1 (3).jpg",
+          "path": "posters/1 (3).jpg",
+          "url": "/assets/posters/1 (3).jpg"
+        },
+        {
+          "type": "file",
+          "name": "10.jpg",
+          "path": "posters/10.jpg",
+          "url": "/assets/posters/10.jpg"
+        },
+        {
+          "type": "file",
+          "name": "Entrance.jpg",
+          "path": "posters/Entrance.jpg",
+          "url": "/assets/posters/Entrance.jpg"
+        },
+        {
+          "type": "file",
+          "name": "jumping.jpg",
+          "path": "posters/jumping.jpg",
+          "url": "/assets/posters/jumping.jpg"
+        },
+        {
+          "type": "file",
+          "name": "khaye poster.jpg",
+          "path": "posters/khaye poster.jpg",
+          "url": "/assets/posters/khaye poster.jpg"
+        },
+        {
+          "type": "file",
+          "name": "new minds 2.jpg",
+          "path": "posters/new minds 2.jpg",
+          "url": "/assets/posters/new minds 2.jpg"
+        },
+        {
+          "type": "file",
+          "name": "poster music.jpg",
+          "path": "posters/poster music.jpg",
+          "url": "/assets/posters/poster music.jpg"
+        }
+      ],
+      "coverUrl": "/assets/posters/1 (3).jpg"
+    },
+    {
+      "type": "folder",
+      "name": "Product stickers",
+      "path": "Product stickers",
+      "children": [
+        {
+          "type": "file",
+          "name": "1.jpg",
+          "path": "Product stickers/1.jpg",
+          "url": "/assets/Product stickers/1.jpg"
+        },
+        {
+          "type": "file",
+          "name": "MAIZE.png",
+          "path": "Product stickers/MAIZE.png",
+          "url": "/assets/Product stickers/MAIZE.png"
+        },
+        {
+          "type": "file",
+          "name": "STICKER.png",
+          "path": "Product stickers/STICKER.png",
+          "url": "/assets/Product stickers/STICKER.png"
+        },
+        {
+          "type": "file",
+          "name": "SUNFLOWER.png",
+          "path": "Product stickers/SUNFLOWER.png",
+          "url": "/assets/Product stickers/SUNFLOWER.png"
+        }
+      ],
+      "coverUrl": "/assets/Product stickers/1.jpg"
+    },
+    {
+      "type": "folder",
+      "name": "social media cover",
+      "path": "social media cover",
+      "children": [
+        {
+          "type": "file",
+          "name": "5.jpg",
+          "path": "social media cover/5.jpg",
+          "url": "/assets/social media cover/5.jpg"
+        }
+      ],
+      "coverUrl": "/assets/social media cover/5.jpg"
+    },
+    {
+      "type": "folder",
+      "name": "Tshirts",
+      "path": "Tshirts",
+      "children": [
+        {
+          "type": "file",
+          "name": "animal'.jpg",
+          "path": "Tshirts/animal'.jpg",
+          "url": "/assets/Tshirts/animal'.jpg"
+        },
+        {
+          "type": "file",
+          "name": "bkue on white.jpg",
+          "path": "Tshirts/bkue on white.jpg",
+          "url": "/assets/Tshirts/bkue on white.jpg"
+        },
+        {
+          "type": "file",
+          "name": "black on blue.jpg",
+          "path": "Tshirts/black on blue.jpg",
+          "url": "/assets/Tshirts/black on blue.jpg"
+        },
+        {
+          "type": "file",
+          "name": "blue on black.jpg",
+          "path": "Tshirts/blue on black.jpg",
+          "url": "/assets/Tshirts/blue on black.jpg"
+        },
+        {
+          "type": "file",
+          "name": "FISHER.jpg",
+          "path": "Tshirts/FISHER.jpg",
+          "url": "/assets/Tshirts/FISHER.jpg"
+        },
+        {
+          "type": "file",
+          "name": "front whi.jpg",
+          "path": "Tshirts/front whi.jpg",
+          "url": "/assets/Tshirts/front whi.jpg"
+        },
+        {
+          "type": "file",
+          "name": "front.jpg",
+          "path": "Tshirts/front.jpg",
+          "url": "/assets/Tshirts/front.jpg"
+        },
+        {
+          "type": "file",
+          "name": "golf shirt.jpg",
+          "path": "Tshirts/golf shirt.jpg",
+          "url": "/assets/Tshirts/golf shirt.jpg"
+        },
+        {
+          "type": "file",
+          "name": "IBRAVE MOCK.jpg",
+          "path": "Tshirts/IBRAVE MOCK.jpg",
+          "url": "/assets/Tshirts/IBRAVE MOCK.jpg"
+        },
+        {
+          "type": "file",
+          "name": "tshirt 2.jpg",
+          "path": "Tshirts/tshirt 2.jpg",
+          "url": "/assets/Tshirts/tshirt 2.jpg"
+        },
+        {
+          "type": "file",
+          "name": "tshirt front (1).jpg",
+          "path": "Tshirts/tshirt front (1).jpg",
+          "url": "/assets/Tshirts/tshirt front (1).jpg"
+        },
+        {
+          "type": "file",
+          "name": "tshirt front black.jpg",
+          "path": "Tshirts/tshirt front black.jpg",
+          "url": "/assets/Tshirts/tshirt front black.jpg"
+        },
+        {
+          "type": "file",
+          "name": "tshirt front red.jpg",
+          "path": "Tshirts/tshirt front red.jpg",
+          "url": "/assets/Tshirts/tshirt front red.jpg"
+        },
+        {
+          "type": "file",
+          "name": "tshirt white.jpg",
+          "path": "Tshirts/tshirt white.jpg",
+          "url": "/assets/Tshirts/tshirt white.jpg"
+        },
+        {
+          "type": "file",
+          "name": "tshirt.jpg",
+          "path": "Tshirts/tshirt.jpg",
+          "url": "/assets/Tshirts/tshirt.jpg"
+        },
+        {
+          "type": "file",
+          "name": "white on black.jpg",
+          "path": "Tshirts/white on black.jpg",
+          "url": "/assets/Tshirts/white on black.jpg"
+        },
+        {
+          "type": "file",
+          "name": "white on blue.jpg",
+          "path": "Tshirts/white on blue.jpg",
+          "url": "/assets/Tshirts/white on blue.jpg"
+        },
+        {
+          "type": "file",
+          "name": "work 1.jpg",
+          "path": "Tshirts/work 1.jpg",
+          "url": "/assets/Tshirts/work 1.jpg"
+        }
+      ],
+      "coverUrl": "/assets/Tshirts/animal'.jpg"
+    }
+  ]
+}

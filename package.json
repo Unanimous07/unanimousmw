@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "prestart": "node tools/generate-portfolio-index.mjs",
     "start": "ng serve",
+    "prebuild": "node tools/generate-portfolio-index.mjs",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -33,6 +35,7 @@
     "@angular/ssr": "^20.3.2",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",
+    "sharp": "^0.33.5",
     "tslib": "^2.3.0"
   },
   "devDependencies": {

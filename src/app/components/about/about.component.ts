@@ -28,15 +28,15 @@ import { CommonModule } from '@angular/common';
             
             <div class="stats">
               <div class="stat-item">
-                <h3>50+</h3>
+                <h3>250</h3>
                 <p>Projects Completed</p>
               </div>
               <div class="stat-item">
-                <h3>25+</h3>
+                <h3>150</h3>
                 <p>Happy Clients</p>
               </div>
               <div class="stat-item">
-                <h3>3+</h3>
+                <h3>7+</h3>
                 <p>Years Experience</p>
               </div>
             </div>
@@ -46,7 +46,7 @@ import { CommonModule } from '@angular/common';
             <div class="team-grid">
               <div class="team-member">
                 <div class="member-avatar">
-                  <div class="avatar-placeholder">👨‍🎨</div>
+                  <img src="/assets/CEO photo/Layer 6.png" alt="Creative Director" style="width:64px;height:64px;border-radius:50%;object-fit:cover;box-shadow:0 2px 8px rgba(0,0,0,0.12);" />
                 </div>
                 <h4>Creative Director</h4>
                 <p>Leading design strategy and creative vision</p>
@@ -245,7 +245,14 @@ import { CommonModule } from '@angular/common';
     }
 
     .value-icon {
-      font-size: 3rem;
+      font-size: 1.2rem;
+    }
+
+    .value-icon svg {
+      width: 48px;
+      height: 48px;
+      display: block;
+      margin: 0 auto;
       margin-bottom: 1rem;
     }
 
