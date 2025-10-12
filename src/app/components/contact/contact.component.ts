@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef, AfterViewInit, OnDestroy, Inject, NgZ
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PLATFORM_ID } from '@angular/core';
+import emailjs from '@emailjs/browser';
 
 @Component({
   selector: 'app-contact',
@@ -103,7 +104,15 @@ import { PLATFORM_ID } from '@angular/core';
               <label>Project Details</label>
               <textarea class="form-control" [(ngModel)]="formData.message" name="message" rows="5" required placeholder="Tell us about your project..."></textarea>
             </div>
-            <button class="btn btn-primary" type="submit" [disabled]="!contactForm.form.valid">Send Message</button>
+            
+            <div *ngIf="submitMessage" class="submit-message" [class.success]="submitMessage.includes('✅')" [class.error]="submitMessage.includes('❌')">
+              {{ submitMessage }}
+            </div>
+            
+            <button class="btn btn-primary" type="submit" [disabled]="!contactForm.form.valid || isSubmitting">
+              <span *ngIf="!isSubmitting">Send Message</span>
+              <span *ngIf="isSubmitting">Sending...</span>
+            </button>
           </form>
           </div>
         </div>
@@ -314,6 +323,38 @@ import { PLATFORM_ID } from '@angular/core';
     .btn:disabled {
       opacity: 0.6;
       cursor: not-allowed;
+    }
+
+    .submit-message {
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-weight: 500;
+      animation: slideIn 0.3s ease;
+    }
+
+    .submit-message.success {
+      background: rgba(34, 197, 94, 0.2);
+      border: 2px solid rgba(34, 197, 94, 0.5);
+      color: #fff;
+    }
+
+    .submit-message.error {
+      background: rgba(239, 68, 68, 0.2);
+      border: 2px solid rgba(239, 68, 68, 0.5);
+      color: #fff;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @media (max-width: 768px) {
@@ -656,16 +697,59 @@ export class ContactComponent implements AfterViewInit, OnDestroy {
     this.mouse.active = false;
   };
 
-  onSubmit() {
-    console.log('Form submitted:', this.formData);
-    // Here you would typically send the data to your backend
-    alert('Thank you for your message! We\'ll get back to you soon.');
-    this.formData = {
-      name: '',
-      email: '',
-      service: '',
-      budget: '',
-      message: ''
-    };
+  isSubmitting = false;
+  submitMessage = '';
+
+  async onSubmit() {
+    if (this.isSubmitting) return;
+    
+    this.isSubmitting = true;
+    this.submitMessage = 'Sending...';
+
+    try {
+      // EmailJS configuration
+      const serviceId = 'service_wp7299b';   // Your EmailJS Service ID
+      const templateId = 'template_g6hsj5v'; // Your EmailJS Template ID
+      const publicKey = 'Ali-m3dN70OtbQ5B-'; // Your EmailJS Public Key
+
+      const templateParams = {
+        to_email: 'hello@unanimw.com',
+        from_name: this.formData.name,
+        from_email: this.formData.email,
+        service: this.formData.service,
+        budget: this.formData.budget,
+        message: this.formData.message,
+        reply_to: this.formData.email
+      };
+
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      
+      this.submitMessage = '✅ Thank you! Your message has been sent successfully.';
+      
+      // Reset form
+      this.formData = {
+        name: '',
+        email: '',
+        service: '',
+        budget: '',
+        message: ''
+      };
+
+      // Clear success message after 5 seconds
+      setTimeout(() => {
+        this.submitMessage = '';
+      }, 5000);
+
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      this.submitMessage = '❌ Oops! Something went wrong. Please try again or email us directly at hello@unanimw.com';
+      
+      // Clear error message after 8 seconds
+      setTimeout(() => {
+        this.submitMessage = '';
+      }, 8000);
+    } finally {
+      this.isSubmitting = false;
+    }
   }
 }

@@ -362,7 +362,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 
     // Update & draw particles
     const mouseInfluenceRadius = 120;
-    const connectDist2 = 160 * 160;
+    const connectDist2 = 180 * 180; // Increased connection distance
     const mX = this.mouse.x;
     const mY = this.mouse.y;
     const mouseActive = this.mouse.active;
@@ -393,8 +393,8 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
       }
     }
 
-    // Draw connections first (enhanced visibility)
-    ctx.lineWidth = 2;
+    // Draw connections first (thin lines)
+    ctx.lineWidth = 1.5;
     for (let i = 0; i < this.particles.length; i++) {
       const p1 = this.particles[i];
       for (let j = i + 1; j < this.particles.length; j++) {
@@ -404,7 +404,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
         const d2 = dx * dx + dy * dy;
         if (d2 < connectDist2) {
           const alpha = 1 - d2 / connectDist2;
-          ctx.strokeStyle = `rgba(255,255,255,${0.5 * alpha})`;
+          ctx.strokeStyle = `rgba(255,255,255,${0.4 * alpha})`;
           ctx.beginPath();
           ctx.moveTo(p1.x, p1.y);
           ctx.lineTo(p2.x, p2.y);
@@ -413,22 +413,22 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
       }
     }
 
-    // Draw particles with enhanced glow
+    // Draw particles with enhanced visibility
     for (const p of this.particles) {
-      // Bright core
-      ctx.fillStyle = 'rgba(255,255,255,1)';
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fill();
-      
-      // Enhanced glow
-      const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 15);
-      glow.addColorStop(0, 'rgba(255,255,255,0.8)');
-      glow.addColorStop(0.4, 'rgba(255,255,255,0.4)');
+      // Main particle glow
+      const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 12);
+      glow.addColorStop(0, 'rgba(255,255,255,1)');
+      glow.addColorStop(0.3, 'rgba(255,255,255,0.8)');
       glow.addColorStop(1, 'rgba(255,255,255,0)');
       ctx.fillStyle = glow;
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size * 15, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Core particle dot
+      ctx.fillStyle = 'rgba(255,255,255,1)';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
       ctx.fill();
     }
   }
