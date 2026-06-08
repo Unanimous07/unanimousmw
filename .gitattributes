@@ -1,0 +1,13 @@
+# Keep binary assets from producing huge textual diffs
+*.png binary
+*.PNG binary
+*.jpg binary
+*.JPG binary
+*.jpeg binary
+*.JPEG binary
+*.gif binary
+*.GIF binary
+*.webp binary
+*.WEBP binary
+*.pdf binary
+*.PDF binary

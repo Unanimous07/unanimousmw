@@ -7,7 +7,7 @@ import { Component, ElementRef, AfterViewInit } from '@angular/core';
     <footer class="footer">
   <!-- Animation removed as requested -->
       <div class="footer-content">
-        <p>&copy; 2025 Unanimous. All rights reserved.</p>
+        <p>&copy; {{ currentYear }} Unanimous. All rights reserved.</p>
       </div>
     </footer>
   `,
@@ -39,5 +39,7 @@ import { Component, ElementRef, AfterViewInit } from '@angular/core';
 })
 export class FooterComponent implements AfterViewInit {
   // Animation removed as requested
+  currentYear = new Date().getFullYear();
+
   ngAfterViewInit(): void {}
 }

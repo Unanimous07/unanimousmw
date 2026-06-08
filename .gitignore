@@ -40,3 +40,7 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Internal docs copied for one-off extraction
+src/assets/team/*.pdf
+src/assets/team/*.PDF

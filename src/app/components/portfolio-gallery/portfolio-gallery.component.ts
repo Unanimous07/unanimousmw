@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PortfolioService, GalleryItem } from '../../services/portfolio.service';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-portfolio-gallery',
@@ -21,22 +23,24 @@ import { PortfolioService, GalleryItem } from '../../services/portfolio.service'
       </div>
 
       <div class="gallery-grid">
-        <div 
+        <button 
           *ngFor="let item of galleryItems" 
           class="gallery-item"
           [class.folder-item]="item.isFolder"
-          (click)="openItem(item)">
+          type="button"
+          (click)="openItem(item)"
+          [attr.aria-label]="item.isFolder ? ('Open folder ' + item.name) : ('Open image ' + item.name)">
           <img [src]="item.isFolder ? item.thumbnail : item.path" [alt]="item.name" class="gallery-img" loading="lazy">
           <div class="gallery-overlay">
             <h3>{{ item.name }}</h3>
             <span *ngIf="item.isFolder" class="folder-badge">📁 Folder</span>
           </div>
-        </div>
+        </button>
       </div>
 
-      <div *ngIf="selectedItem" class="lightbox" (click)="closeLightbox()">
-        <div class="lightbox-content" (click)="$event.stopPropagation()">
-          <button class="close-btn" (click)="closeLightbox()">×</button>
+      <div *ngIf="selectedItem" class="lightbox" (click)="closeLightbox()" role="presentation">
+        <div class="lightbox-content" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" [attr.aria-label]="selectedItem.name || 'Image preview'">
+          <button #closeBtn class="close-btn" (click)="closeLightbox()" aria-label="Close preview">×</button>
           <img [src]="selectedItem.path" [alt]="selectedItem.name" class="lightbox-img">
           <div class="lightbox-info">
             <h2>{{ selectedItem.name }}</h2>
@@ -103,6 +107,11 @@ import { PortfolioService, GalleryItem } from '../../services/portfolio.service'
       transition: transform 0.3s ease;
       box-shadow: 0 5px 20px rgba(0,0,0,0.1);
       background: white;
+      border: none;
+      padding: 0;
+      text-align: left;
+      width: 100%;
+      appearance: none;
     }
 
     .folder-item {
@@ -223,32 +232,70 @@ export class PortfolioGalleryComponent implements OnInit {
   galleryItems: GalleryItem[] = [];
   selectedItem: GalleryItem | null = null;
   breadcrumbs: string[] = [];
+  private readonly destroyRef = inject(DestroyRef);
+  @ViewChild('closeBtn', { static: false }) closeBtn!: ElementRef<HTMLButtonElement>;
 
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
-    private portfolioService: PortfolioService
+    private portfolioService: PortfolioService,
+    private seoService: SeoService
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.category = params['category'];
-      this.subfolder = params['subfolder'] || '';
+    this.route.params
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(params => {
+      this.category = this.decodeRouteSegment(params['category'] || '');
+      this.subfolder = this.decodeRouteSegment(params['subfolder'] || '');
       this.loadGalleryData();
     });
   }
 
   loadGalleryData() {
+    this.selectedItem = null;
     this.breadcrumbs = [this.category];
     
     if (this.subfolder) {
       this.breadcrumbs.push(this.subfolder);
       this.categoryTitle = this.subfolder;
-      this.galleryItems = this.portfolioService.getSubfolderItems(this.category, this.subfolder);
+      this.portfolioService
+        .getSubfolderItems(this.category, this.subfolder)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((items) => {
+          this.galleryItems = items;
+        });
     } else {
       this.categoryTitle = this.category;
-      this.galleryItems = this.portfolioService.getGalleryItems(this.category);
+      this.portfolioService
+        .getGalleryItems(this.category)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((items) => {
+          this.galleryItems = items;
+        });
     }
+
+    this.updateSeo();
+  }
+
+  private updateSeo() {
+    const sectionTitle = this.subfolder
+      ? `${this.subfolder} Portfolio`
+      : `${this.category} Portfolio`;
+    const sectionDescription = this.subfolder
+      ? `Browse ${this.subfolder} projects in the ${this.category} collection by Unanimous.`
+      : `Explore Unanimous ${this.category} projects and creative work.`;
+    const path = this.subfolder
+      ? `/portfolio/${encodeURIComponent(this.category)}/${encodeURIComponent(this.subfolder)}`
+      : `/portfolio/${encodeURIComponent(this.category)}`;
+
+    this.seoService.setPageSeo({
+      title: sectionTitle,
+      description: sectionDescription,
+      path,
+      image: '/assets/our%20logo/black.png',
+      type: 'website'
+    });
   }
 
   openItem(item: GalleryItem) {
@@ -256,6 +303,12 @@ export class PortfolioGalleryComponent implements OnInit {
       this.router.navigate(['/portfolio', this.category, item.name]);
     } else {
       this.selectedItem = item;
+      // focus the close button when lightbox opens
+      setTimeout(() => {
+        try {
+          this.closeBtn?.nativeElement?.focus();
+        } catch {}
+      }, 0);
     }
   }
 
@@ -263,11 +316,26 @@ export class PortfolioGalleryComponent implements OnInit {
     this.selectedItem = null;
   }
 
+  @HostListener('window:keydown', ['$event'])
+  handleKeydown(event: KeyboardEvent) {
+    if (event.key === 'Escape' && this.selectedItem) {
+      this.closeLightbox();
+    }
+  }
+
   goBack() {
     if (this.subfolder) {
       this.router.navigate(['/portfolio', this.category]);
     } else {
       this.router.navigate(['/']);
+    }
+  }
+
+  private decodeRouteSegment(segment: string): string {
+    try {
+      return decodeURIComponent(segment);
+    } catch {
+      return segment;
     }
   }
 }

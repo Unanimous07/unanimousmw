@@ -11,22 +11,37 @@ import { PLATFORM_ID } from '@angular/core';
       <canvas #heroCanvas class="hero-canvas" aria-hidden="true"></canvas>
       <div class="hero-content">
         <div class="hero-text">
+          <p class="hero-kicker">Creative Studio in Malawi</p>
           <h1 class="hero-title">
-            <span class="title-line">Creative</span>
-            <span class="title-line highlight">Design</span>
-            <span class="title-line">Solutions</span>
+            <span class="title-typewriter">
+              <span #typewriter class="title-line" aria-live="polite"></span>
+              <span class="cursor" aria-hidden="true">|</span>
+            </span>
           </h1>
           <p class="hero-description">
-            We craft exceptional visual experiences that tell your story. 
-            From stunning graphic designs to comprehensive digital solutions, 
-            we bring your vision to life with creativity and precision.
+            We help ambitious brands stand out and convert with strategic visuals,
+            user-focused interfaces, and modern websites built for real business growth.
           </p>
-          <div class="hero-buttons">
-            <a href="#portfolio" class="btn btn-primary">View Our Work</a>
-            <a href="#contact" class="btn btn-secondary">Get Started</a>
+          <div class="hero-proof">
+            <span class="proof-item">Fast Turnaround</span>
+            <span class="proof-item">Strategy-Led Design</span>
+            <span class="proof-item">Conversion-Focused Builds</span>
           </div>
+          <div class="hero-pillars">
+            <span class="pillar">Brand Identity</span>
+            <span class="pillar">UX Research & UI Systems</span>
+            <span class="pillar">Responsive Websites</span>
+          </div>
+          <div class="hero-buttons">
+            <a href="https://wa.me/265998997400?text=Hi%20Unanimous%20MW%2C%20I%20want%20help%20with%20branding%2C%20UX%2FUI%2C%20or%20web%20development." target="_blank" rel="noopener noreferrer" class="btn btn-primary">Chat on WhatsApp</a>
+            <a href="#contact" (click)="scrollTo($event, '#contact')" class="btn btn-secondary">Request Proposal</a>
+            <a href="#portfolio" class="btn btn-ghost">See Case Studies</a>
+          </div>
+          <p class="hero-microcopy">Most client inquiries get a response within 24 hours.</p>
         </div>
-        <div class="hero-visual"></div>
+        <div class="hero-visual" #heroVisual>
+          <div class="hero-depth-layer" aria-hidden="true"></div>
+        </div>
       </div>
     </section>
   `,
@@ -62,11 +77,64 @@ import { PLATFORM_ID } from '@angular/core';
       color: white;
     }
 
+    .hero-kicker {
+      display: inline-block;
+      margin-bottom: 1rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      color: #7a3000;
+      background: rgba(255, 247, 237, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.1s forwards;
+    }
+
     .title-line {
       display: block;
       opacity: 0;
       transform: translateY(50px);
       animation: slideUp 0.8s ease forwards;
+    }
+
+    .title-typewriter {
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      vertical-align: bottom;
+    }
+
+    .cursor {
+      display: inline-block;
+      margin-left: 6px;
+      opacity: 0.95;
+      animation: blink 700ms steps(2, start) infinite;
+      color: rgba(255,255,255,0.95);
+      font-weight: 800;
+      vertical-align: baseline;
+      transform: translateY(0.06em);
+    }
+
+    /* Ensure the typed letters and cursor stay on the same line */
+    .title-typewriter .title-line {
+      display: inline-block;
+      opacity: 1; /* visibility handled by typewriter JS */
+      transform: none !important;
+      animation: none !important;
+      vertical-align: baseline;
+    }
+
+    .cursor.caret-paused {
+      animation: none !important;
+      opacity: 0.28 !important;
+      transition: opacity 300ms ease;
+    }
+
+    @keyframes blink {
+      to { opacity: 0; }
     }
 
     .title-line:nth-child(2) {
@@ -88,16 +156,61 @@ import { PLATFORM_ID } from '@angular/core';
       font-size: 1.2rem;
       line-height: 1.6;
       color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 2rem;
+      margin-bottom: 1.25rem;
       opacity: 0;
       animation: fadeIn 0.8s ease 0.6s forwards;
     }
 
+    .hero-pillars {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.7s forwards;
+    }
+
+    .hero-proof {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.9rem;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.68s forwards;
+    }
+
+    .proof-item {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #7a3000;
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .pillar {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #fff;
+      background: rgba(26, 26, 26, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(6px);
+    }
+
     .hero-buttons {
       display: flex;
+      flex-wrap: wrap;
       gap: 1rem;
       opacity: 0;
-      animation: fadeIn 0.8s ease 0.8s forwards;
+      animation: fadeIn 0.8s ease 0.85s forwards;
     }
 
     .btn {
@@ -131,9 +244,42 @@ import { PLATFORM_ID } from '@angular/core';
       transform: translateY(-2px);
     }
 
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .hero-microcopy {
+      margin: 1rem 0 0;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.9);
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.95s forwards;
+    }
+
     .hero-visual {
       position: relative;
       height: 500px;
+    }
+
+    .hero-depth-layer {
+      position: absolute;
+      inset: 0;
+      background-image: url('/assets/hero-depth.png');
+      background-position: center;
+      background-size: cover;
+      opacity: 0.12;
+      transform-origin: center;
+      pointer-events: none;
+      filter: blur(6px) saturate(0.9) contrast(0.98);
+      transition: transform 280ms cubic-bezier(.2,.9,.25,1), opacity 280ms ease;
+      z-index: 1;
     }
 
     .hero-canvas {
@@ -144,8 +290,9 @@ import { PLATFORM_ID } from '@angular/core';
       display: block;
       z-index: 2;
       pointer-events: auto;
-      mix-blend-mode: screen;
-      opacity: 0.5;
+      mix-blend-mode: normal;
+      opacity: 0.48;
+      will-change: transform, opacity;
     }
 
     @keyframes slideUp {
@@ -163,7 +310,7 @@ import { PLATFORM_ID } from '@angular/core';
 
     @media (max-width: 768px) {
       .hero {
-        padding-top: 180px; /* Extra padding on mobile to clear fixed header */
+        padding-top: 128px;
         min-height: auto;
         padding-bottom: 3rem;
       }
@@ -171,23 +318,37 @@ import { PLATFORM_ID } from '@angular/core';
       .hero-content {
         grid-template-columns: 1fr;
         text-align: center;
-        gap: 2rem;
-        padding: 1.5rem;
-        padding-top: 3rem; /* Additional top padding for content */
+        gap: 1.5rem;
+        padding: 1.25rem;
+        padding-top: 2rem;
       }
 
       .hero-title {
-        font-size: 4rem;
-        line-height: 1.15;
-        margin-top: 2rem; /* Add top margin to title */
+        font-size: 2.85rem;
+        line-height: 1.08;
+        margin-top: 1rem;
       }
 
       .hero-description {
-        font-size: 1.25rem;
+        font-size: 0.98rem;
+      }
+
+      .hero-pillars {
+        justify-content: center;
+        gap: 0.45rem;
+      }
+
+      .hero-proof {
+        justify-content: center;
+      }
+
+      .pillar,
+      .proof-item {
+        font-size: 0.7rem;
       }
 
       .hero-visual {
-        height: 250px;
+        height: 150px;
       }
 
       .hero-buttons {
@@ -198,27 +359,74 @@ import { PLATFORM_ID } from '@angular/core';
 
       .btn {
         width: 100%;
-        max-width: 280px;
+        max-width: 320px;
       }
     }
 
     @media (max-width: 480px) {
       .hero {
-        padding-top: 200px; /* Even more padding on very small screens */
+        padding-top: 116px;
       }
 
       .hero-content {
         padding: 1rem;
-        padding-top: 3.5rem; /* Extra padding for small screens */
+        padding-top: 1.5rem;
+        gap: 1.25rem;
       }
 
       .hero-title {
-        font-size: 3.25rem;
-        margin-top: 2.5rem; /* More margin on small screens */
+        font-size: 2.25rem;
+        margin-top: 0.75rem;
       }
 
       .hero-description {
-        font-size: 1.15rem;
+        font-size: 0.95rem;
+      }
+
+      .hero-microcopy {
+        margin-top: 0.85rem;
+      }
+
+      .hero-pillars,
+      .hero-proof {
+        justify-content: flex-start;
+        gap: 0.4rem;
+      }
+
+      .hero-buttons {
+        width: 100%;
+        gap: 0.75rem;
+      }
+
+      .btn {
+        max-width: none;
+        padding: 0.9rem 1.25rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-kicker,
+      .title-line,
+      .hero-description,
+      .hero-proof,
+      .hero-pillars,
+      .hero-buttons,
+      .hero-microcopy {
+        opacity: 1;
+        animation: none;
+        transform: none;
+      }
+
+      .btn,
+      .btn-primary:hover,
+      .btn-secondary:hover,
+      .btn-ghost:hover {
+        transition: none;
+        transform: none;
+      }
+
+      .hero-canvas {
+        opacity: 0.22;
       }
     }
   `]
@@ -226,6 +434,8 @@ import { PLATFORM_ID } from '@angular/core';
 export class HeroComponent implements AfterViewInit, OnDestroy {
   @ViewChild('heroCanvas') canvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('heroSection') heroRef!: ElementRef<HTMLElement>;
+  @ViewChild('typewriter') typewriterRef?: ElementRef<HTMLElement>;
+  @ViewChild('heroVisual') heroVisualRef?: ElementRef<HTMLElement>;
 
   private ctx: CanvasRenderingContext2D | null = null;
   private animationId: number | null = null;
@@ -234,6 +444,19 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   private mouse = { x: 0, y: 0, active: false };
   private reduceMotion = false;
   private resizeObserver?: ResizeObserver;
+  private typingTimers: number[] = [];
+  private typePhrases: string[] = ['Graphic Design', 'UX/UI Design', 'Web Development'];
+  private typeIndex = 0;
+  private typingActive = false;
+  private lastScrollProgress = 0;
+  // Parallax tuning (smaller values = subtler motion)
+  private parallaxConfig = {
+    canvasX: 8,
+    canvasY: 6,
+    visualX: 3,
+    visualYMult: 0.45,
+    rotateDeg: 0.6
+  };
 
   constructor(private zone: NgZone, @Inject(PLATFORM_ID) private platformId: Object) {}
 
@@ -273,19 +496,29 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
       window.addEventListener('resize', this.setupCanvasSize, { passive: true });
     }
 
+    // Parallax: respond to scroll for subtle background motion
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+
     if (this.reduceMotion) {
       // Draw a static scene
       this.drawFrame(true);
+      // Show the first phrase statically for reduced motion
+      if (this.typewriterRef && this.typewriterRef.nativeElement) {
+        this.typewriterRef.nativeElement.textContent = this.typePhrases[0];
+      }
       return;
     }
 
     // Run animation outside Angular for performance
     this.zone.runOutsideAngular(() => this.animate());
+    // Start the typewriter loop
+    this.startTypewriter();
   }
 
   ngOnDestroy(): void {
     if (!isPlatformBrowser(this.platformId)) return;
     if (this.animationId != null) cancelAnimationFrame(this.animationId);
+    this.stopTypewriter();
     const target = this.heroRef?.nativeElement || this.canvasRef?.nativeElement;
     if (target) {
       target.removeEventListener('mousemove', this.onMouseMove);
@@ -300,6 +533,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     } else {
       window.removeEventListener('resize', this.setupCanvasSize);
     }
+    window.removeEventListener('scroll', this.onScroll);
   }
 
   private setupCanvasSize = () => {
@@ -308,7 +542,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     const parent = canvas.parentElement as HTMLElement | null;
     const width = (parent?.clientWidth ?? 600);
     const height = (parent?.clientHeight ?? 400);
-    this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.dpr = Math.min(window.devicePixelRatio || 1, this.isCompactViewport() ? 1.5 : 2);
     canvas.width = Math.floor(width * this.dpr);
     canvas.height = Math.floor(height * this.dpr);
     canvas.style.width = width + 'px';
@@ -320,7 +554,11 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     const canvas = this.canvasRef?.nativeElement;
     if (!canvas) return 80;
     const area = (canvas.clientWidth || 600) * (canvas.clientHeight || 400);
-    // Increased presence across full section: ~1 per 5000 px^2, clamp [70, 200]
+    if (this.isCompactViewport()) {
+      return Math.max(40, Math.min(80, Math.floor(area / 6000)));
+    }
+
+    // Balanced presence across desktop screens: ~1 per 5000 px^2, clamp [70, 200]
     return Math.max(70, Math.min(200, Math.floor(area / 5000)));
   }
 
@@ -361,8 +599,9 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     ctx.clearRect(0, 0, w, h);
 
     // Update & draw particles
-    const mouseInfluenceRadius = 120;
-    const connectDist2 = 180 * 180; // Increased connection distance
+    const compactViewport = this.isCompactViewport();
+    const mouseInfluenceRadius = compactViewport ? 72 : 120;
+    const connectDist2 = (compactViewport ? 130 : 180) * (compactViewport ? 130 : 180);
     const mX = this.mouse.x;
     const mY = this.mouse.y;
     const mouseActive = this.mouse.active;
@@ -415,22 +654,36 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
 
     // Draw particles with enhanced visibility
     for (const p of this.particles) {
-      // Main particle glow
-      const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 12);
-      glow.addColorStop(0, 'rgba(255,255,255,1)');
-      glow.addColorStop(0.3, 'rgba(255,255,255,0.8)');
+      // Soft outer halo (large, very subtle)
+      const halo = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 28);
+      halo.addColorStop(0, 'rgba(255,255,255,0.10)');
+      halo.addColorStop(0.5, 'rgba(255,255,255,0.03)');
+      halo.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = halo;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * 7, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Main particle glow (medium, bright)
+      const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 18);
+      glow.addColorStop(0, 'rgba(255,255,255,0.60)');
+      glow.addColorStop(0.35, 'rgba(255,255,255,0.40)');
       glow.addColorStop(1, 'rgba(255,255,255,0)');
       ctx.fillStyle = glow;
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, p.size * 5, 0, Math.PI * 2);
       ctx.fill();
       
-      // Core particle dot
-      ctx.fillStyle = 'rgba(255,255,255,1)';
+      // Core particle dot (bright white center)
+      ctx.fillStyle = 'rgba(255,255,255,0.70)';
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, p.size * 1.2, 0, Math.PI * 2);
       ctx.fill();
     }
+  }
+
+  private isCompactViewport(): boolean {
+    return typeof window !== 'undefined' && window.innerWidth <= 768;
   }
 
   private onMouseMove = (e: MouseEvent) => {
@@ -438,6 +691,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     this.mouse.x = e.clientX - rect.left;
     this.mouse.y = e.clientY - rect.top;
     this.mouse.active = true;
+    this.updateParallaxTransforms();
   };
 
   private onMouseLeave = () => {
@@ -467,9 +721,111 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     const rect = (this.heroRef?.nativeElement || this.canvasRef.nativeElement).getBoundingClientRect();
     this.mouse.x = t.clientX - rect.left;
     this.mouse.y = t.clientY - rect.top;
+    this.updateParallaxTransforms();
   };
 
   private onTouchEnd = () => {
     this.mouse.active = false;
   };
+
+  private onScroll = () => {
+    this.updateParallaxTransforms();
+  };
+
+  private updateParallaxTransforms() {
+    if (!isPlatformBrowser(this.platformId) || this.reduceMotion) return;
+    const section = this.heroRef?.nativeElement;
+    const canvas = this.canvasRef?.nativeElement;
+    const visual = this.heroVisualRef?.nativeElement;
+    if (!section) return;
+
+    const rect = section.getBoundingClientRect();
+    const vh = window.innerHeight || 1;
+    // progress: 0 when top of section at viewport bottom, 1 when section top at viewport top
+    const progress = Math.min(1, Math.max(0, 1 - (rect.top / vh)));
+    // Slight vertical parallax shift up to 18px
+    const yShift = (progress - 0.5) * -36; // range roughly -18..18
+
+    // Mouse influence for subtle tilt/shift
+    const w = rect.width || (canvas?.clientWidth ?? 0);
+    const h = rect.height || (canvas?.clientHeight ?? 0);
+    const mx = (this.mouse.x / (w || 1) - 0.5) || 0;
+    const my = (this.mouse.y / (h || 1) - 0.5) || 0;
+
+    if (canvas) {
+      const tX = mx * this.parallaxConfig.canvasX; // horizontal parallax
+      const tY = yShift + my * this.parallaxConfig.canvasY; // combine scroll + mouse
+      canvas.style.transform = `translate3d(${tX}px, ${tY}px, 0) scale(1.02)`;
+    }
+    if (visual) {
+      const vX = mx * this.parallaxConfig.visualX;
+      const vY = yShift * this.parallaxConfig.visualYMult + my * (this.parallaxConfig.visualYMult * 14);
+      visual.style.transform = `translate3d(${vX}px, ${vY}px, 0) rotate(${mx * this.parallaxConfig.rotateDeg}deg)`;
+    }
+
+    this.lastScrollProgress = progress;
+  }
+
+  private startTypewriter() {
+    if (!this.typewriterRef || this.typingActive) return;
+    this.typingActive = true;
+    const el = this.typewriterRef.nativeElement;
+    const cursorEl = el.querySelector('.cursor') as HTMLElement | null;
+    const phrases = this.typePhrases;
+    let idx = this.typeIndex || 0;
+    let forward = true;
+    let pos = 0;
+
+    const tick = () => {
+      // ensure cursor is active unless we're intentionally paused
+      if (cursorEl && cursorEl.classList.contains('caret-paused')) {
+        cursorEl.classList.remove('caret-paused');
+      }
+      const txt = phrases[idx];
+      if (forward) {
+        pos++;
+        el.textContent = txt.slice(0, pos);
+        if (pos >= txt.length) {
+          // pause at end: fade caret during pause
+          if (cursorEl) cursorEl.classList.add('caret-paused');
+          this.typingTimers.push(window.setTimeout(() => {
+            if (cursorEl) cursorEl.classList.remove('caret-paused');
+            forward = false;
+            tick();
+          }, 1200));
+          return;
+        }
+      } else {
+        pos--;
+        el.textContent = txt.slice(0, Math.max(0, pos));
+        if (pos <= 0) {
+          // ensure cursor returns to normal when cycle restarts
+          if (cursorEl) cursorEl.classList.remove('caret-paused');
+          forward = true;
+          idx = (idx + 1) % phrases.length;
+        }
+      }
+      const delay = forward ? 80 + Math.random() * 40 : 28 + Math.random() * 20;
+      this.typingTimers.push(window.setTimeout(tick, delay));
+    };
+
+    tick();
+  }
+
+  private stopTypewriter() {
+    this.typingActive = false;
+    for (const id of this.typingTimers) {
+      clearTimeout(id);
+    }
+    this.typingTimers = [];
+  }
+
+  scrollTo(evt: Event, selector: string) {
+    evt.preventDefault();
+    if (typeof document === 'undefined') return;
+    const el = document.querySelector(selector) as HTMLElement | null;
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 }

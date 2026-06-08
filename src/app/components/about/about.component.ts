@@ -10,29 +10,24 @@ import { CommonModule } from '@angular/common';
       <div class="container">
         <div class="about-content">
           <div class="about-text">
-            <h2>About Unanimous</h2>
+            <h2>About Unanimous MW</h2>
             <p class="lead">
-              We are a creative studio passionate about bringing ideas to life through 
-              exceptional design and innovative solutions.
+              We are a Malawi-based creative and digital studio helping brands move from ideas to measurable results.
             </p>
             <p>
-              Founded on the principle that great design should be accessible to everyone, 
-              Unanimous combines artistic vision with technical expertise to deliver 
-              outstanding results for our clients.
+              We combine strategy, design craft, and technical execution to build experiences that look strong and perform in the real world.
             </p>
             <p>
-              Our team specializes in graphic design, with additional capabilities in 
-              web development, mobile applications, and database solutions. We believe 
-              in the power of visual storytelling and its ability to transform businesses.
+              From brand systems and UX/UI interfaces to responsive websites, our process is built around audience needs, business goals, and long-term consistency.
             </p>
             
             <div class="stats">
               <div class="stat-item">
-                <h3>250</h3>
+                <h3>250+</h3>
                 <p>Projects Completed</p>
               </div>
               <div class="stat-item">
-                <h3>150</h3>
+                <h3>150+</h3>
                 <p>Happy Clients</p>
               </div>
               <div class="stat-item">
@@ -41,27 +36,46 @@ import { CommonModule } from '@angular/common';
               </div>
             </div>
           </div>
-          
-          <div class="about-visual">
-            <div class="team-grid">
-              <div class="team-member">
-                <div class="member-avatar">
-                  <img src="/assets/CEO photo/Layer 6.png" alt="Creative Director" style="width:64px;height:64px;border-radius:50%;object-fit:cover;box-shadow:0 2px 8px rgba(0,0,0,0.12);" />
+        </div>
+      </div>
+
+      <div class="team-section">
+        <div class="container">
+          <div class="team-header">
+            <h2>The Team Behind The Work</h2>
+            <p>Cross-functional specialists shaping brand systems, UX flows, and launch-ready digital experiences.</p>
+            <div class="credibility-strip">
+              <span class="credibility-item">7 Specialists</span>
+              <span class="credibility-item">Design + UX + Web</span>
+              <span class="credibility-item">Client-First Delivery</span>
+            </div>
+          </div>
+
+          <div class="team-grid">
+            <div class="team-member" *ngFor="let member of teamMembers">
+              <div class="member-card">
+                <div class="member-image-wrapper">
+                  <img [src]="member.image" [alt]="member.name" class="member-image" loading="lazy" />
                 </div>
-                <h4>Creative Director</h4>
-                <p>Leading design strategy and creative vision</p>
-              </div>
-              <div class="team-member">
-                <div class="member-avatar">
-                  <div class="avatar-placeholder">👩‍💻</div>
+                <div class="member-info">
+                  <h4>{{ member.name }}</h4>
+                  <p class="member-role">{{ member.role }}</p>
+                  <p class="member-summary">{{ member.summary }}</p>
+                  <div class="ownership-row">
+                    <span class="ownership-label">Owns</span>
+                    <span class="ownership-value">{{ member.ownership }}</span>
+                  </div>
+                  <div class="skill-tags">
+                    <span class="skill-tag" *ngFor="let skill of member.specialties">{{ skill }}</span>
+                  </div>
                 </div>
-                <h4>Technical Lead</h4>
-                <p>Bringing designs to life with code</p>
               </div>
             </div>
           </div>
         </div>
-        
+      </div>
+
+      <div class="container">
         <div class="values-section">
           <h3>Our Values</h3>
           <div class="values-grid">
@@ -113,10 +127,10 @@ import { CommonModule } from '@angular/common';
 
     .about-content {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      grid-template-columns: 1fr;
+      gap: 0;
       align-items: center;
-      margin-bottom: 4rem;
+      margin-bottom: 0;
     }
 
     .about-text h2 {
@@ -165,55 +179,189 @@ import { CommonModule } from '@angular/common';
     }
 
     .about-visual {
+      display: none;
+    }
+
+    .team-section {
+      padding: 5rem 0;
+      background: linear-gradient(to right, #ffffff 0%, #f8fafc 100%);
+      border-top: 1px solid #e8ecf1;
+      border-bottom: 1px solid #e8ecf1;
+    }
+
+    .team-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .team-header h2 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .team-header p {
+      font-size: 1.1rem;
+      color: #5f6368;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .credibility-strip {
+      margin: 0 auto;
       display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
       justify-content: center;
+    }
+
+    .credibility-item {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #7a3000;
+      background: #fff1e4;
+      border: 1px solid #ffd3b2;
     }
 
     .team-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+      padding: 0 2rem;
     }
 
     .team-member {
       text-align: center;
-      padding: 2rem;
+    }
+
+    .member-card {
       background: white;
       border-radius: 20px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-    }
-
-    .team-member:hover {
-      transform: translateY(-5px);
-    }
-
-    .member-avatar {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 1rem;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #fbb51d 0%, #fd6a0a 100%);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      height: 100%;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
     }
 
-    .avatar-placeholder {
-      font-size: 2rem;
+    .team-member:hover .member-card {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    .member-image-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fbb51d 0%, #fd6a0a 100%);
+    }
+
+    .member-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+
+    .team-member:hover .member-image {
+      transform: scale(1.05);
+    }
+
+    .member-info {
+      padding: 1.8rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
     }
 
     .team-member h4 {
       font-size: 1.2rem;
-      font-weight: 600;
+      font-weight: 700;
       color: #1a1a1a;
-      margin-bottom: 0.5rem;
+      margin: 0 0 0.4rem;
     }
 
-    .team-member p {
+    .member-role {
+      font-size: 0.95rem;
+      color: #fd6a0a;
+      margin: 0 0 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .member-summary {
+      margin: 0 0 1rem;
       font-size: 0.9rem;
-      color: #666;
-      margin: 0;
+      line-height: 1.5;
+      color: #5f6368;
+      flex: 1;
+    }
+
+    .ownership-row {
+      display: flex;
+      gap: 0.35rem;
+      align-items: center;
+      margin-bottom: 0.8rem;
+      justify-content: center;
+    }
+
+    .ownership-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #8e939b;
+      font-weight: 700;
+    }
+
+    .ownership-value {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #1f2937;
+      background: #f5f7fa;
+      border: 1px solid #e3e7ee;
+      border-radius: 999px;
+      padding: 0.25rem 0.65rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: center;
+    }
+
+    .skill-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      color: #8a3c00;
+      background: #fff3e8;
+      border: 1px solid #ffd4b4;
+    }
+
+    .showcase-head {
+      display: none;
     }
 
     .values-section {
@@ -272,7 +420,7 @@ import { CommonModule } from '@angular/common';
 
     @media (max-width: 768px) {
       .about {
-        padding: 4rem 0 3rem;
+        padding: 3rem 0 0;
       }
 
       .container {
@@ -282,7 +430,7 @@ import { CommonModule } from '@angular/common';
       .about-content {
         grid-template-columns: 1fr;
         gap: 2rem;
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
       }
 
       .about-text h2 {
@@ -302,9 +450,34 @@ import { CommonModule } from '@angular/common';
         min-width: 120px;
       }
 
+      .team-section {
+        padding: 3.5rem 0;
+      }
+
+      .team-header h2 {
+        font-size: 2rem;
+      }
+
+      .team-header p {
+        font-size: 1rem;
+      }
+
+      .team-header {
+        margin-bottom: 2.5rem;
+      }
+
       .team-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
+        padding: 0 1.5rem;
+      }
+
+      .member-info {
+        padding: 1.5rem;
+      }
+
+      .team-member h4 {
+        font-size: 1.1rem;
       }
 
       .values-section {
@@ -322,7 +495,7 @@ import { CommonModule } from '@angular/common';
 
     @media (max-width: 480px) {
       .about {
-        padding: 3rem 0 2rem;
+        padding: 2rem 0 0;
       }
 
       .container {
@@ -331,6 +504,20 @@ import { CommonModule } from '@angular/common';
 
       .about-text h2 {
         font-size: 1.75rem;
+      }
+
+      .team-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1rem;
+      }
+
+      .team-header h2 {
+        font-size: 1.75rem;
+      }
+
+      .team-section {
+        padding: 3rem 0;
       }
 
       .values-section {
@@ -347,4 +534,63 @@ import { CommonModule } from '@angular/common';
     }
   `]
 })
-export class AboutComponent {}
+export class AboutComponent {
+  readonly teamMembers = [
+    {
+      name: 'Laureen Mbewe',
+      role: 'Brand & Aesthetic Advisor',
+      image: '/assets/team/Laureen Mbewe.jpeg',
+      summary: 'Coordinates project communication and delivery logistics so teams and clients stay aligned from kickoff to handover.',
+      ownership: 'Client Coordination',
+      specialties: ['Client Communication', 'Project Coordination', 'Operations Support']
+    },
+    {
+      name: 'Lekani Juwa',
+      role: 'Social Media Strategist & Community Lead',
+      image: '/assets/team/Lekani Juwa.jpg',
+      summary: 'Builds community engagement and social presence through strategic content planning and authentic brand storytelling.',
+      ownership: 'Social Strategy & Community',
+      specialties: ['Social Media Strategy', 'Community Management', 'Content Planning']
+    },
+    {
+      name: 'Kelvin Mulera',
+      role: 'Creative Director',
+      image: '/assets/team/Kelvin Mulera.JPG',
+      summary: 'Guides strategy, concept direction, and final creative quality across client engagements.',
+      ownership: 'Creative Direction',
+      specialties: ['Branding', 'Art Direction', 'Visual Strategy']
+    },
+    {
+      name: 'Alexander Chirwa',
+      role: 'Graphic Review',
+      image: '/assets/team/Alexander Chirwa.jpg',
+      summary: 'Leads design quality checks and keeps outputs production-ready for print and digital.',
+      ownership: 'Design Quality Assurance',
+      specialties: ['Graphic Design', 'Layout Systems', 'Print Quality']
+    },
+    {
+      name: 'Prince Nsoma',
+      role: 'Motion Designer & Video Specialist',
+      image: '/assets/team/Prince Msoma.jpg',
+      summary: 'Builds motion-led storytelling assets for campaigns, product launches, and social channels.',
+      ownership: 'Motion & Video Production',
+      specialties: ['Motion Design', 'Social Video', 'Visual Effects']
+    },
+    {
+      name: 'William Juene',
+      role: 'Content and Graphic Designer',
+      image: '/assets/team/William Chimkhwamba.jpg',
+      summary: 'Transforms briefs into clear messaging and visual systems users can scan and trust quickly.',
+      ownership: 'Content Design Systems',
+      specialties: ['UI Content', 'Campaign Graphics', 'User Messaging']
+    },
+    {
+      name: 'Edward Fectory',
+      role: 'Brand Integrity & Junior Designer',
+      image: '/assets/team/Edward Fectory.jpg',
+      summary: 'Supports UX/UI and asset preparation while maintaining consistency across brand touchpoints.',
+      ownership: 'Brand Integrity Support',
+      specialties: ['UX/UI Support', 'Web Asset Prep', 'Brand Consistency']
+    }
+  ];
+}

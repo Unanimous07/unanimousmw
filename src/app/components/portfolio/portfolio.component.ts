@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PortfolioService, PortfolioFolder } from '../../services/portfolio.service';
 
 @Component({
@@ -13,33 +14,68 @@ import { PortfolioService, PortfolioFolder } from '../../services/portfolio.serv
         <div class="section-header">
           <span class="label">Portfolio</span>
           <h2>Featured Work</h2>
-          <p>A curated selection of our most distinguished projects, showcasing creativity, precision, and visual excellence.</p>
+          <p>A curated selection of branding, UX/UI, and web-focused projects designed to improve clarity, engagement, and conversion.</p>
+        </div>
+
+        <div class="portfolio-filters" role="tablist" aria-label="Portfolio disciplines">
+          <button
+            *ngFor="let filter of filters"
+            type="button"
+            class="filter-chip"
+            [class.active]="activeFilter === filter.value"
+            (click)="setActiveFilter(filter.value)">
+            {{ filter.label }}
+          </button>
         </div>
 
         <div class="portfolio-masonry">
-          <div 
-            *ngFor="let folder of portfolioFolders; let i = index" 
+          <button 
+            *ngFor="let folder of filteredPortfolioFolders; let i = index" 
             class="portfolio-card"
             [class.large]="i % 5 === 0"
-            (click)="viewPortfolio(folder.name)">
+            type="button"
+            (click)="viewPortfolio(folder.routeSegment)"
+            [attr.aria-label]="'Open portfolio category ' + folder.name">
             <div class="card-inner">
-              <div class="card-image">
-                <img [src]="folder.thumbnail" [alt]="folder.name" loading="lazy">
+              <div class="card-image" [class.logo-card-image]="folder.thumbnailType === 'logo'">
+                <img [src]="folder.thumbnail" [alt]="folder.name" loading="lazy" [class.logo-thumbnail]="folder.thumbnailType === 'logo'">
                 <div class="image-overlay"></div>
               </div>
               <div class="card-content">
+                <div class="project-meta">
+                  <span class="discipline-tag">{{ folder.discipline === 'ux-ui' ? 'UX/UI Design' : folder.discipline === 'web' ? 'Web Development' : 'Branding' }}</span>
+                  <span class="item-count">{{ folder.itemCount }} {{ folder.itemLabel || 'assets' }}</span>
+                </div>
                 <h3 class="project-title">{{ folder.name }}</h3>
                 <p class="project-description">{{ folder.description }}</p>
+                <div class="case-study-grid">
+                  <div class="case-point">
+                    <span class="case-label">Challenge</span>
+                    <p>{{ folder.caseStudy.challenge }}</p>
+                  </div>
+                  <div class="case-point">
+                    <span class="case-label">Approach</span>
+                    <p>{{ folder.caseStudy.approach }}</p>
+                  </div>
+                  <div class="case-point">
+                    <span class="case-label">Outcome</span>
+                    <p>{{ folder.caseStudy.outcome }}</p>
+                  </div>
+                </div>
                 <div class="view-project">
-                  <span>View Collection</span>
+                  <span>{{ folder.externalUrl ? 'Visit Website' : 'View Collection' }}</span>
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                     <path d="M4 10h12m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </div>
               </div>
             </div>
-          </div>
+          </button>
         </div>
+
+        <p *ngIf="filteredPortfolioFolders.length === 0" class="empty-state">
+          More {{ activeFilter === 'web' ? 'web development' : activeFilter === 'ux-ui' ? 'UX/UI' : 'portfolio' }} case studies are being curated.
+        </p>
       </div>
     </section>
   `,
@@ -105,6 +141,41 @@ import { PortfolioService, PortfolioFolder } from '../../services/portfolio.serv
       font-weight: 300;
     }
 
+    .portfolio-filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin: 0 auto 2.5rem;
+      max-width: 900px;
+    }
+
+    .filter-chip {
+      border: 1px solid #dadada;
+      background: #fff;
+      color: #424242;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 0.6rem 1rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .filter-chip:hover {
+      border-color: #fd6a0a;
+      color: #fd6a0a;
+    }
+
+    .filter-chip.active {
+      background: #fd6a0a;
+      border-color: #fd6a0a;
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(253, 106, 10, 0.25);
+    }
+
     .portfolio-masonry {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
@@ -116,6 +187,11 @@ import { PortfolioService, PortfolioFolder } from '../../services/portfolio.serv
       position: relative;
       cursor: pointer;
       transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: none;
+      background: transparent;
+      padding: 0;
+      text-align: left;
+      width: 100%;
     }
 
     .portfolio-card.large {
@@ -163,8 +239,29 @@ import { PortfolioService, PortfolioFolder } from '../../services/portfolio.serv
       transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    .card-image.logo-card-image {
+      background: linear-gradient(140deg, #1f2937 0%, #111827 100%);
+    }
+
+    .card-image.logo-card-image .logo-thumbnail {
+      top: 50%;
+      left: 50%;
+      width: 80%;
+      height: 80%;
+      object-fit: contain;
+      transform: translate(-50%, -50%);
+      padding: 1rem;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.16);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+    }
+
     .portfolio-card:hover .card-image img {
       transform: scale(1.08);
+    }
+
+    .portfolio-card:hover .card-image.logo-card-image .logo-thumbnail {
+      transform: translate(-50%, -50%) scale(1.03);
     }
 
     .image-overlay {
@@ -185,6 +282,36 @@ import { PortfolioService, PortfolioFolder } from '../../services/portfolio.serv
       display: flex;
       flex-direction: column;
       background: white;
+    }
+
+    .project-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .discipline-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      color: #fd6a0a;
+      background: rgba(253, 106, 10, 0.08);
+      border: 1px solid rgba(253, 106, 10, 0.25);
+    }
+
+    .item-count {
+      font-size: 0.78rem;
+      color: #767676;
+      font-weight: 600;
+      letter-spacing: 0.02em;
     }
 
     .category {
@@ -221,8 +348,38 @@ import { PortfolioService, PortfolioFolder } from '../../services/portfolio.serv
       font-size: 0.95rem;
       color: #666;
       line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+
+    .case-study-grid {
+      display: grid;
+      gap: 0.75rem;
       margin-bottom: 1.5rem;
       flex: 1;
+    }
+
+    .case-point {
+      border: 1px solid #efefef;
+      border-radius: 10px;
+      padding: 0.7rem 0.85rem;
+      background: #fcfcfc;
+    }
+
+    .case-label {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9a9a9a;
+      margin-bottom: 0.3rem;
+    }
+
+    .case-point p {
+      margin: 0;
+      font-size: 0.84rem;
+      line-height: 1.45;
+      color: #4a4a4a;
     }
 
     .view-project {
@@ -245,6 +402,13 @@ import { PortfolioService, PortfolioFolder } from '../../services/portfolio.serv
 
     .portfolio-card:hover .view-project svg {
       transform: translateX(4px);
+    }
+
+    .empty-state {
+      text-align: center;
+      color: #666;
+      font-size: 1rem;
+      padding: 1rem 0 0;
     }
 
     @media (max-width: 1200px) {
@@ -274,13 +438,29 @@ import { PortfolioService, PortfolioFolder } from '../../services/portfolio.serv
         font-size: 2.5rem;
       }
 
+      .section-header {
+        margin-bottom: 2.5rem;
+      }
+
       .section-header p {
         font-size: 1rem;
       }
 
+      .portfolio-filters {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 0.25rem;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .filter-chip {
+        flex: 0 0 auto;
+      }
+
       .portfolio-masonry {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.35rem;
       }
 
       .portfolio-card.large {
@@ -288,11 +468,23 @@ import { PortfolioService, PortfolioFolder } from '../../services/portfolio.serv
       }
 
       .card-content {
-        padding: 1.5rem;
+        padding: 1.25rem;
       }
 
       .project-title {
-        font-size: 1.25rem;
+        font-size: 1.18rem;
+      }
+
+      .case-study-grid {
+        gap: 0.55rem;
+      }
+
+      .case-point {
+        padding: 0.65rem 0.75rem;
+      }
+
+      .case-point p {
+        font-size: 0.8rem;
       }
     }
 
@@ -319,21 +511,88 @@ import { PortfolioService, PortfolioFolder } from '../../services/portfolio.serv
       }
 
       .card-content {
-        padding: 1.25rem;
+        padding: 1.1rem;
+      }
+
+      .portfolio-filters {
+        gap: 0.55rem;
+      }
+
+      .filter-chip {
+        padding: 0.5rem 0.85rem;
+        font-size: 0.78rem;
+      }
+
+      .project-description {
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .case-study-grid {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .portfolio-card,
+      .card-inner,
+      .card-image img,
+      .view-project,
+      .view-project svg,
+      .filter-chip {
+        transition: none;
+      }
+
+      .portfolio-card:hover,
+      .portfolio-card:hover .card-inner,
+      .portfolio-card:hover .card-image img,
+      .portfolio-card:hover .view-project svg {
+        transform: none;
       }
     }
   `]
 })
 export class PortfolioComponent implements OnInit {
   portfolioFolders: PortfolioFolder[] = [];
+  activeFilter: 'all' | 'branding' | 'ux-ui' | 'web' = 'all';
+  readonly filters: Array<{ label: string; value: 'all' | 'branding' | 'ux-ui' | 'web' }> = [
+    { label: 'All Work', value: 'all' },
+    { label: 'Branding', value: 'branding' },
+    { label: 'UX/UI', value: 'ux-ui' },
+    { label: 'Web Development', value: 'web' }
+  ];
+  private readonly destroyRef = inject(DestroyRef);
   
   constructor(private router: Router, private portfolioService: PortfolioService) {}
 
   ngOnInit() {
-    this.portfolioFolders = this.portfolioService.getPortfolioFolders();
+    this.portfolioService
+      .getPortfolioFolders()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((folders) => {
+        this.portfolioFolders = folders;
+      });
+  }
+
+  get filteredPortfolioFolders(): PortfolioFolder[] {
+    if (this.activeFilter === 'all') {
+      return this.portfolioFolders;
+    }
+
+    return this.portfolioFolders.filter((folder) => folder.discipline === this.activeFilter);
+  }
+
+  setActiveFilter(filter: 'all' | 'branding' | 'ux-ui' | 'web') {
+    this.activeFilter = filter;
   }
 
   viewPortfolio(folderName: string) {
+    const folder = this.portfolioFolders.find((entry) => entry.routeSegment === folderName);
+    if (folder?.externalUrl) {
+      window.open(folder.externalUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
     this.router.navigate(['/portfolio', folderName]);
   }
 }

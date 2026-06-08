@@ -708,6 +708,12 @@
         },
         {
           "type": "file",
+          "name": "impact.jpg",
+          "path": "Logos/impact.jpg",
+          "url": "/assets/Logos/impact.jpg"
+        },
+        {
+          "type": "file",
           "name": "Kwathu.png",
           "path": "Logos/Kwathu.png",
           "url": "/assets/Logos/Kwathu.png"
@@ -756,6 +762,12 @@
         },
         {
           "type": "file",
+          "name": "ohcon.png",
+          "path": "Logos/ohcon.png",
+          "url": "/assets/Logos/ohcon.png"
+        },
+        {
+          "type": "file",
           "name": "sign.jpg",
           "path": "Logos/sign.jpg",
           "url": "/assets/Logos/sign.jpg"
@@ -780,6 +792,20 @@
       "name": "our logo",
       "path": "our logo",
       "children": [
+        {
+          "type": "folder",
+          "name": "PNG",
+          "path": "our logo/PNG",
+          "children": [
+            {
+              "type": "file",
+              "name": "New logo (2)@4x.png",
+              "path": "our logo/PNG/New logo (2)@4x.png",
+              "url": "/assets/our logo/PNG/New logo (2)@4x.png"
+            }
+          ],
+          "coverUrl": "/assets/our logo/PNG/New logo (2)@4x.png"
+        },
         {
           "type": "file",
           "name": "black.png",
@@ -896,6 +922,56 @@
         }
       ],
       "coverUrl": "/assets/social media cover/5.jpg"
+    },
+    {
+      "type": "folder",
+      "name": "team",
+      "path": "team",
+      "children": [
+        {
+          "type": "file",
+          "name": "Alexander Chirwa.jpg",
+          "path": "team/Alexander Chirwa.jpg",
+          "url": "/assets/team/Alexander Chirwa.jpg"
+        },
+        {
+          "type": "file",
+          "name": "Edward Fectory.jpg",
+          "path": "team/Edward Fectory.jpg",
+          "url": "/assets/team/Edward Fectory.jpg"
+        },
+        {
+          "type": "file",
+          "name": "Kelvin Mulera.JPG",
+          "path": "team/Kelvin Mulera.JPG",
+          "url": "/assets/team/Kelvin Mulera.JPG"
+        },
+        {
+          "type": "file",
+          "name": "Laureen Mbewe.jpeg",
+          "path": "team/Laureen Mbewe.jpeg",
+          "url": "/assets/team/Laureen Mbewe.jpeg"
+        },
+        {
+          "type": "file",
+          "name": "Lekani Juwa.jpg",
+          "path": "team/Lekani Juwa.jpg",
+          "url": "/assets/team/Lekani Juwa.jpg"
+        },
+        {
+          "type": "file",
+          "name": "Prince Msoma.jpg",
+          "path": "team/Prince Msoma.jpg",
+          "url": "/assets/team/Prince Msoma.jpg"
+        },
+        {
+          "type": "file",
+          "name": "William Chimkhwamba.jpg",
+          "path": "team/William Chimkhwamba.jpg",
+          "url": "/assets/team/William Chimkhwamba.jpg"
+        }
+      ],
+      "coverUrl": "/assets/team/Alexander Chirwa.jpg"
     },
     {
       "type": "folder",

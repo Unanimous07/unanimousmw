@@ -1,11 +1,24 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, map, shareReplay } from 'rxjs/operators';
 
 export interface PortfolioFolder {
   name: string;
   path: string;
   thumbnail: string;
+  thumbnailType?: 'image' | 'logo';
   description: string;
   itemCount: number;
+  itemLabel?: string;
+  routeSegment: string;
+  discipline: 'branding' | 'ux-ui' | 'web';
+  externalUrl?: string;
+  caseStudy: {
+    challenge: string;
+    approach: string;
+    outcome: string;
+  };
 }
 
 export interface GalleryItem {
@@ -15,178 +28,321 @@ export interface GalleryItem {
   thumbnail?: string;
 }
 
+type PortfolioNode = {
+  type: 'folder' | 'file';
+  name: string;
+  path: string;
+  url?: string;
+  coverUrl?: string;
+  children?: PortfolioNode[];
+};
+
 @Injectable({
   providedIn: 'root'
 })
 export class PortfolioService {
-  
-  private portfolioStructure = {
-    'Branding': {
-      path: 'assets/Branding',
-      description: 'Complete brand identity packages and corporate branding solutions',
-      thumbnail: 'assets/Branding/IOT fixing/logo_black.png',
-      subfolders: ['Biosus', 'DYD Mphangamo', 'IOT fixing', 'Parabolic', 'zathu']
+  private readonly webShowcaseProjects: PortfolioFolder[] = [
+    {
+      name: 'Impact Horti Website',
+      path: 'external/impacthorti',
+      thumbnail: '/assets/Logos/impact.jpg',
+      description: 'Corporate website design and development focused on clear service communication and trust-building user journeys.',
+      itemCount: 1,
+      itemLabel: 'live site',
+      routeSegment: 'impacthorti',
+      discipline: 'web',
+      externalUrl: 'https://www.impacthorti.com',
+      caseStudy: {
+        challenge: 'Present agricultural expertise in a format that is modern, credible, and easy for partners to navigate quickly.',
+        approach: 'Structured pages around key audience intents, applied responsive layouts, and optimized the information hierarchy for clarity.',
+        outcome: 'Launched a production-ready site that communicates capabilities clearly and supports stronger first-contact conversion.'
+      }
     },
-    'Flyers': {
-      path: 'assets/Flyers',
-      description: 'Event and promotional flyer designs',
-      thumbnail: 'assets/Flyers/birthday.jpg',
-      subfolders: []
-    },
-    'Posters': {
-      path: 'assets/posters',
-      description: 'Large format poster designs',
-      thumbnail: 'assets/posters/poster music.jpg',
-      subfolders: []
-    },
-    'Business Cards': {
-      path: 'assets/business cards',
-      description: 'Professional business card designs',
-      thumbnail: 'assets/business cards/business card.jpg',
-      subfolders: []
-    },
-    'T-Shirts': {
-      path: 'assets/Tshirts',
-      description: 'Custom t-shirt designs',
-      thumbnail: 'assets/Tshirts/front.jpg',
-      subfolders: []
-    },
-    'Caps': {
-      path: 'assets/Caps',
-      description: 'Custom cap designs',
-      thumbnail: 'assets/Caps/cap.jpg',
-      subfolders: []
-    },
-    'Banners': {
-      path: 'assets/banners',
-      description: 'Digital banners and billboards',
-      thumbnail: 'assets/banners/banner2.jpg',
-      subfolders: []
-    },
-    'Product Stickers': {
-      path: 'assets/Product stickers',
-      description: 'Product stickers and labels',
-      thumbnail: 'assets/Product stickers/STICKER.png',
-      subfolders: []
-    },
-    'Invitations': {
-      path: 'assets/Invitations',
-      description: 'Wedding and event invitations',
-      thumbnail: 'assets/Invitations/Save the date 3.jpg',
-      subfolders: []
-    },
-    'Business Profile': {
-      path: 'assets/Business profile',
-      description: 'Company profiles and brochures',
-      thumbnail: 'assets/Business profile/busines 1.jpg',
-      subfolders: []
-    },
-    'Social Media': {
-      path: 'assets/social media cover',
-      description: 'Social media graphics',
-      thumbnail: 'assets/social media cover/5.jpg',
-      subfolders: []
-    },
-    'Logos': {
-      path: 'assets/Logos',
-      description: 'Logo designs',
-      thumbnail: 'assets/Logos/logo.png',
-      subfolders: []
+    {
+      name: 'OHCON MW Website',
+      path: 'external/ohconmw',
+      thumbnail: '/assets/Logos/ohcon.png',
+      thumbnailType: 'logo',
+      description: 'Institutional website built to showcase organizational programs, credibility, and public-facing communication.',
+      itemCount: 1,
+      itemLabel: 'live site',
+      routeSegment: 'ohconmw',
+      discipline: 'web',
+      externalUrl: 'https://www.ohconmw.org',
+      caseStudy: {
+        challenge: 'Make organization information and initiatives accessible while maintaining a professional and trustworthy presentation.',
+        approach: 'Designed a clean content architecture with responsive components and readable visual hierarchy across devices.',
+        outcome: 'Delivered a maintainable website that strengthens visibility and helps stakeholders find core information faster.'
+      }
     }
+  ];
+
+  private readonly emptyRoot: PortfolioNode = {
+    type: 'folder',
+    name: 'Home',
+    path: '',
+    children: []
   };
 
-  private imageFiles = {
-    'Branding/Biosus': ['business card.jpg', 'new poster.jpg', 'tshirt front black.jpg', 'tshirt front red.jpg'],
-    'Branding/DYD Mphangamo': ['cap 1.jpg', 'cap new.jpg', 'FISHER.jpg', 'golf shirt.jpg'],
-    'Branding/IOT fixing': ['logo_black.png', 'logo_green.png', 'logo_white.png', 'tshirt 2.jpg', 'cap black.jpg', 'cap white.jpg', 'BOTTLE.jpg', 'Lanyard.jpg'],
-    'Branding/Parabolic': ['busines 1.jpg', 'Roll up banner.jpg', 'STICKER.png', 'MAIZE.png', 'SUNFLOWER.png', 'birthday.jpg', 'independence.jpg'],
-    'Branding/zathu': ['business.jpg', 'sign.jpg', 'bottle (1).jpg', 'cap.jpg', 'bag.jpg', 'tshirt.jpg', 'Blank billboard.jpg'],
-    'Flyers': ['birthday.jpg', 'easter.jpg', 'independence.jpg', 'flyer.jpg', 'flyer (1).jpg', 'flyer (2).jpg', 'flyer (3).jpg', 'flyer (4).jpg', 'mothers.jpg', 'invite.jpg'],
-    'posters': ['poster music.jpg', '10.jpg', 'Entrance.jpg', 'jumping.jpg', 'khaye poster.jpg', 'new minds 2.jpg'],
-    'business cards': ['business card.jpg', 'a4-paper-mockup.jpg'],
-    'Tshirts': ['front.jpg', 'tshirt.jpg', 'tshirt 2.jpg', 'tshirt white.jpg', 'FISHER.jpg', 'IBRAVE MOCK.jpg', 'front whi.jpg', 'work 1.jpg'],
-    'Caps': ['cap.jpg', 'cap 1.jpg', 'cap black.jpg', 'cap white.jpg', 'cap new.jpg'],
-    'banners': ['banner2.jpg', '4.jpg', 'Billboard_Mockup_3.jpg', 'Roll up banner.jpg', '2 (1).jpg'],
-    'Product stickers': ['STICKER.png', 'MAIZE.png', 'SUNFLOWER.png', '1.jpg'],
-    'Invitations': ['Save the date 3.jpg', 'Save the date 2 (1).jpg', 'card 2.jpg', 'save the.png'],
-    'Business profile': ['busines 1.jpg', '0004 Free Softcover Book Mockup.jpg', '0012 Free Softcover Book Mockup.jpg'],
-    'social media cover': ['5.jpg'],
-    'Logos': ['logo.png', 'logo2.jpg', 'logo_black.png', 'logo_green.png', 'logo_white.png', 'Kwathu.png', 'Yanga.png', 'mine.png', 'sprout.jpg']
+  private readonly featuredCategoryOrder = [
+    'Branding',
+    'Flyers',
+    'posters',
+    'business cards',
+    'Tshirts',
+    'Caps',
+    'banners',
+    'Product stickers',
+    'Invitations',
+    'Business profile',
+    'social media cover',
+    'Logos'
+  ];
+
+  private readonly categoryDescriptions: Record<string, string> = {
+    branding: 'Complete brand identity packages and corporate branding solutions.',
+    flyers: 'Event and promotional flyer designs.',
+    posters: 'Large format poster designs.',
+    'business cards': 'Professional business card designs.',
+    tshirts: 'Custom t-shirt designs.',
+    caps: 'Custom cap designs.',
+    banners: 'Digital banners and billboard designs.',
+    'product stickers': 'Product stickers and label design work.',
+    invitations: 'Wedding and event invitation designs.',
+    'business profile': 'Company profile and brochure designs.',
+    'social media cover': 'Social media graphics and cover design.',
+    logos: 'Logo concepts and identity marks.'
   };
 
-  getPortfolioFolders(): PortfolioFolder[] {
-    return Object.entries(this.portfolioStructure).map(([name, data]) => ({
-      name,
-      path: data.path,
-      thumbnail: '/' + data.thumbnail,
-      description: data.description,
-      itemCount: this.getItemCount(name)
-    }));
+  private readonly categoryDisciplines: Record<string, 'branding' | 'ux-ui' | 'web'> = {
+    branding: 'branding',
+    logos: 'branding',
+    flyers: 'branding',
+    posters: 'branding',
+    'business cards': 'branding',
+    tshirts: 'branding',
+    caps: 'branding',
+    banners: 'branding',
+    'product stickers': 'branding',
+    invitations: 'branding',
+    'business profile': 'ux-ui',
+    'social media cover': 'ux-ui'
+  };
+
+  private readonly categoryOutcomes: Record<string, string> = {
+    branding: 'Built a cohesive identity system clients can scale across channels.',
+    logos: 'Delivered distinctive marks that improve recognition and brand recall.',
+    flyers: 'Improved campaign visibility with high-impact, event-ready layouts.',
+    posters: 'Produced attention-grabbing visuals optimized for large-format print.',
+    'business cards': 'Created premium handout assets that reinforce first impressions.',
+    tshirts: 'Turned brand elements into wearable designs that drive visibility.',
+    caps: 'Developed merch concepts that keep the brand visible in everyday use.',
+    banners: 'Shipped billboard and digital banner concepts designed for fast readability.',
+    'product stickers': 'Designed labels that increase shelf appeal and product clarity.',
+    invitations: 'Crafted event invites that communicate tone, hierarchy, and elegance.',
+    'business profile': 'Structured profile layouts for clearer information flow and readability.',
+    'social media cover': 'Designed platform-ready cover systems for stronger online presence.'
+  };
+
+  private readonly tree$: Observable<PortfolioNode>;
+
+  constructor(private http: HttpClient) {
+    this.tree$ = this.http.get<PortfolioNode>('/assets/portfolio-index.json').pipe(
+      catchError((error) => {
+        console.error('Failed to load portfolio index:', error);
+        return of(this.emptyRoot);
+      }),
+      shareReplay(1)
+    );
   }
 
-  getGalleryItems(category: string): GalleryItem[] {
-    const structure = this.portfolioStructure[category as keyof typeof this.portfolioStructure];
-    if (!structure) return [];
+  getPortfolioFolders(): Observable<PortfolioFolder[]> {
+    return this.tree$.pipe(
+      map((root) => {
+        const folders = (root.children || []).filter((node) => node.type === 'folder');
+        const byName = new Map(
+          folders.map((folder) => [folder.name.toLowerCase(), folder])
+        );
 
-    const items: GalleryItem[] = [];
+        const orderedFeatured = this.featuredCategoryOrder
+          .map((name) => byName.get(name.toLowerCase()))
+          .filter((folder): folder is PortfolioNode => !!folder)
+          .map((folder) => this.toPortfolioFolder(folder));
 
-    structure.subfolders.forEach(subfolder => {
-      const subfolderPath = `${category}/${subfolder}`;
-      const files = this.imageFiles[subfolderPath as keyof typeof this.imageFiles] || [];
-      items.push({
-        name: subfolder,
-        path: subfolderPath,
+        return [...this.webShowcaseProjects, ...orderedFeatured];
+      })
+    );
+  }
+
+  getGalleryItems(category: string): Observable<GalleryItem[]> {
+    return this.tree$.pipe(
+      map((root) => {
+        const folder = this.findFolder(root, [this.decodeSegment(category)]);
+        if (!folder) return [];
+
+        return (folder.children || [])
+          .filter((child) => child.type === 'folder' || child.type === 'file')
+          .map((child) => this.toGalleryItem(child));
+      })
+    );
+  }
+
+  getSubfolderItems(category: string, subfolder: string): Observable<GalleryItem[]> {
+    return this.tree$.pipe(
+      map((root) => {
+        const folder = this.findFolder(root, [this.decodeSegment(category), this.decodeSegment(subfolder)]);
+        if (!folder) return [];
+
+        return (folder.children || [])
+          .filter((child) => child.type === 'file')
+          .map((file) => this.toGalleryItem(file));
+      })
+    );
+  }
+
+  private toPortfolioFolder(folder: PortfolioNode): PortfolioFolder {
+    const key = folder.name.toLowerCase();
+    const thumbnail = folder.coverUrl || this.findFirstImageUrl(folder) || '/assets/our%20logo/black.png';
+    const discipline = this.categoryDisciplines[key] || 'branding';
+    const displayName = this.toDisplayName(folder.name);
+
+    return {
+      name: displayName,
+      path: folder.path,
+      thumbnail,
+      description: this.categoryDescriptions[key] || 'Creative design projects and visual work.',
+      itemCount: this.countFiles(folder),
+      routeSegment: folder.name,
+      discipline,
+      caseStudy: {
+        challenge: `Translate ${displayName.toLowerCase()} needs into work that is both strategic and visually clear.`,
+        approach: `Combined concept exploration, hierarchy refinement, and production-ready execution for ${displayName.toLowerCase()}.`,
+        outcome: this.categoryOutcomes[key] || 'Delivered polished assets tailored to business goals and audience context.'
+      }
+    };
+  }
+
+  private toGalleryItem(node: PortfolioNode): GalleryItem {
+    if (node.type === 'folder') {
+      const thumbnail = node.coverUrl || this.findFirstImageUrl(node) || '/assets/our%20logo/black.png';
+      return {
+        name: this.toDisplayName(node.name),
+        path: node.path,
         isFolder: true,
-        thumbnail: files.length > 0 ? `/${structure.path}/${subfolder}/${files[0]}` : undefined
-      });
-    });
-
-    const matchingKey = Object.keys(this.imageFiles).find(key => 
-      key.toLowerCase() === category.toLowerCase()
-    );
-
-    if (matchingKey) {
-      const files = this.imageFiles[matchingKey as keyof typeof this.imageFiles] || [];
-      files.forEach(file => {
-        items.push({
-          name: file.replace(/\.(jpg|png|jpeg)$/i, ''),
-          path: `/${structure.path}/${file}`,
-          isFolder: false
-        });
-      });
+        thumbnail
+      };
     }
 
-    return items;
-  }
-
-  getSubfolderItems(category: string, subfolder: string): GalleryItem[] {
-    const structure = this.portfolioStructure[category as keyof typeof this.portfolioStructure];
-    if (!structure) return [];
-
-    const subfolderPath = `${category}/${subfolder}`;
-    const files = this.imageFiles[subfolderPath as keyof typeof this.imageFiles] || [];
-
-    return files.map(file => ({
-      name: file.replace(/\.(jpg|png|jpeg)$/i, ''),
-      path: `/${structure.path}/${subfolder}/${file}`,
+    return {
+      name: this.formatDesignName(node.name),
+      path: node.url || `/assets/${node.path}`,
       isFolder: false
-    }));
+    };
   }
 
-  private getItemCount(category: string): number {
-    const structure = this.portfolioStructure[category as keyof typeof this.portfolioStructure];
-    if (!structure) return 0;
+  private findFolder(root: PortfolioNode, segments: string[]): PortfolioNode | null {
+    let current: PortfolioNode | null = root;
 
-    let count = structure.subfolders.length;
-    
-    const mainFolderKey = Object.keys(this.imageFiles).find(key => 
-      key.toLowerCase() === category.toLowerCase()
-    );
-    
-    if (mainFolderKey) {
-      count += (this.imageFiles[mainFolderKey as keyof typeof this.imageFiles] || []).length;
+    for (const segment of segments) {
+      const children: PortfolioNode[] = current?.children ?? [];
+      current =
+        children.find(
+          (child: PortfolioNode) =>
+            child.type === 'folder' && child.name.toLowerCase() === segment.toLowerCase()
+        ) || null;
+
+      if (!current) return null;
+    }
+
+    return current;
+  }
+
+  private findFirstImageUrl(node: PortfolioNode): string | null {
+    const children = node.children || [];
+
+    for (const child of children) {
+      if (child.type === 'file' && child.url) {
+        return child.url;
+      }
+    }
+
+    for (const child of children) {
+      if (child.type === 'folder') {
+        const nested = child.coverUrl || this.findFirstImageUrl(child);
+        if (nested) return nested;
+      }
+    }
+
+    return null;
+  }
+
+  private countFiles(node: PortfolioNode): number {
+    const children = node.children || [];
+    let count = 0;
+
+    for (const child of children) {
+      if (child.type === 'file') {
+        count += 1;
+      } else {
+        count += this.countFiles(child);
+      }
     }
 
     return count;
+  }
+
+  private stripExtension(fileName: string): string {
+    return fileName.replace(/\.[^/.]+$/, '');
+  }
+
+  private formatDesignName(fileName: string): string {
+    const base = this.stripExtension(fileName)
+      .replace(/[_-]+/g, ' ')
+      .replace(/\s*\(\d+\)$/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    if (!base) return 'Untitled Design';
+
+    const words = base.split(' ');
+    const minorWords = new Set(['and', 'or', 'the', 'a', 'an', 'of', 'for', 'to', 'in', 'on']);
+
+    return words
+      .map((word, index) => {
+        if (!word) return word;
+        const lower = word.toLowerCase();
+        if (index > 0 && minorWords.has(lower)) {
+          return lower;
+        }
+        if (/^[A-Z]{2,}$/.test(word)) {
+          return word;
+        }
+        return lower.charAt(0).toUpperCase() + lower.slice(1);
+      })
+      .join(' ');
+  }
+
+  private decodeSegment(segment: string): string {
+    try {
+      return decodeURIComponent(segment);
+    } catch {
+      return segment;
+    }
+  }
+
+  private toDisplayName(name: string): string {
+    return name
+      .replace(/[_-]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .split(' ')
+      .map((part) => {
+        if (!part) return part;
+        if (/^[A-Z]{2,}$/.test(part)) {
+          return part;
+        }
+        return part[0].toUpperCase() + part.slice(1).toLowerCase();
+      })
+      .join(' ');
   }
 }

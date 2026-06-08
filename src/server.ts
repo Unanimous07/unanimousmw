@@ -12,6 +12,7 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
+app.use(express.json({ limit: '64kb' }));
 
 // Resolve assets root for production (dist/browser/assets) and development (src/assets)
 const prodAssetsRoot = join(import.meta.dirname, '../browser/assets');
@@ -21,6 +22,11 @@ const devAssetsRoot = join(process.cwd(), 'src/assets');
 type CacheEntry = { ts: number; data: any };
 const apiCache = new Map<string, CacheEntry>();
 const API_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+type ContactRateEntry = { ts: number; count: number };
+const contactRate = new Map<string, ContactRateEntry>();
+const CONTACT_RATE_WINDOW_MS = 10 * 60 * 1000;
+const CONTACT_RATE_MAX = 5;
 
 function getCache(key: string): any | null {
   const e = apiCache.get(key);
@@ -32,6 +38,46 @@ function getCache(key: string): any | null {
 function setCache(key: string, data: any) {
   apiCache.set(key, { ts: Date.now(), data });
 }
+
+function getClientIp(req: express.Request): string {
+  const forwarded = req.headers['x-forwarded-for'];
+  if (typeof forwarded === 'string' && forwarded.length > 0) {
+    return forwarded.split(',')[0].trim();
+  }
+  return req.ip || req.socket.remoteAddress || 'unknown';
+}
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const existing = contactRate.get(ip);
+  if (!existing || now - existing.ts > CONTACT_RATE_WINDOW_MS) {
+    contactRate.set(ip, { ts: now, count: 1 });
+    return false;
+  }
+  if (existing.count >= CONTACT_RATE_MAX) {
+    return true;
+  }
+  existing.count += 1;
+  return false;
+}
+
+function truncate(input: string, max: number): string {
+  return input.trim().slice(0, max);
+}
+
+function isValidEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+type ContactBody = {
+  name?: unknown;
+  email?: unknown;
+  service?: unknown;
+  budget?: unknown;
+  message?: unknown;
+  website?: unknown;
+  elapsedMs?: unknown;
+};
 
 async function pathExists(p: string) {
   try { await fs.access(p); return true; } catch { return false; }
@@ -147,6 +193,68 @@ app.get('/api/portfolio/tree', async (req, res) => {
     res.json(payload);
   } catch (e: any) {
     res.status(400).json({ error: e?.message || 'Failed to read portfolio tree' });
+  }
+});
+
+app.post('/api/contact', async (req, res) => {
+  try {
+    const ip = getClientIp(req);
+    if (isRateLimited(ip)) {
+      return res.status(429).json({ error: 'Too many requests. Please try again later.' });
+    }
+
+    const body = (req.body || {}) as ContactBody;
+    const name = typeof body.name === 'string' ? truncate(body.name, 100) : '';
+    const email = typeof body.email === 'string' ? truncate(body.email, 200) : '';
+    const service = typeof body.service === 'string' ? truncate(body.service, 100) : '';
+    const budget = typeof body.budget === 'string' ? truncate(body.budget, 100) : '';
+    const message = typeof body.message === 'string' ? truncate(body.message, 3000) : '';
+    const website = typeof body.website === 'string' ? body.website.trim() : '';
+    const elapsedMs = typeof body.elapsedMs === 'number' ? body.elapsedMs : 0;
+
+    if (!name || !email || !service || !message) {
+      return res.status(400).json({ error: 'Missing required fields.' });
+    }
+    if (!isValidEmail(email)) {
+      return res.status(400).json({ error: 'Invalid email address.' });
+    }
+    if (website) {
+      return res.status(200).json({ ok: true });
+    }
+    if (elapsedMs > 0 && elapsedMs < 1500) {
+      return res.status(400).json({ error: 'Submission rejected.' });
+    }
+
+    const resendApiKey = process.env['RESEND_API_KEY'];
+    const fromEmail = process.env['FROM_EMAIL'] || 'hello@yourdomain.com';
+    const toEmail = process.env['TO_EMAIL'] || 'hello@unanimw.com';
+
+    if (!resendApiKey) {
+      return res.status(500).json({ error: 'Contact service not configured.' });
+    }
+
+    const subject = `Website contact: ${service} — ${name}`;
+    const text = `Name: ${name}\nEmail: ${email}\nService: ${service}\nBudget: ${budget || 'N/A'}\n\nMessage:\n${message}`;
+
+    const r = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${resendApiKey}`
+      },
+      body: JSON.stringify({ from: fromEmail, to: toEmail, subject, text })
+    });
+
+    if (!r.ok) {
+      const errText = await r.text().catch(() => 'no-body');
+      console.error('Resend API error:', r.status, errText);
+      return res.status(502).json({ error: 'Failed to send message.' });
+    }
+
+    return res.status(200).json({ ok: true });
+  } catch (e: any) {
+    console.error('Contact API error:', e?.message || e);
+    return res.status(500).json({ error: 'Unexpected server error.' });
   }
 });
 

@@ -63,21 +63,25 @@ New Contact Form Submission from {{from_name}}
 2. Find your **Public Key** (looks like: `xxxxxxxxxxxxxx`)
 3. Copy it
 
-## Step 5: Update Your Code
+## Step 5: Configure Environment Variables (Recommended)
 
-Open `src/app/components/contact/contact.component.ts` and replace these values (around line 668):
+The contact form now sends through the server endpoint `/api/contact`, so EmailJS IDs are no longer hardcoded in client code.
 
-```typescript
-const serviceId = 'YOUR_SERVICE_ID';    // Replace with your Service ID
-const templateId = 'YOUR_TEMPLATE_ID';  // Replace with your Template ID
-const publicKey = 'YOUR_PUBLIC_KEY';    // Replace with your Public Key
+Set these environment variables where your Node/SSR server runs:
+
+```bash
+EMAILJS_SERVICE_ID=service_xxxxxxx
+EMAILJS_TEMPLATE_ID=template_xxxxxxx
+EMAILJS_PUBLIC_KEY=xxxxxxxxxxxxxx
 ```
 
-### Example:
-```typescript
-const serviceId = 'service_abc1234';
-const templateId = 'template_xyz5678';
-const publicKey = 'hG4f2kL8pQ1rT9nM';
+For local PowerShell testing:
+
+```powershell
+$env:EMAILJS_SERVICE_ID="service_xxxxxxx"
+$env:EMAILJS_TEMPLATE_ID="template_xxxxxxx"
+$env:EMAILJS_PUBLIC_KEY="xxxxxxxxxxxxxx"
+npm start
 ```
 
 ## Step 6: Test
@@ -91,7 +95,7 @@ const publicKey = 'hG4f2kL8pQ1rT9nM';
 
 ### Emails not arriving?
 - Check your EmailJS dashboard for failed sends
-- Verify your Service ID, Template ID, and Public Key are correct
+- Verify `EMAILJS_SERVICE_ID`, `EMAILJS_TEMPLATE_ID`, and `EMAILJS_PUBLIC_KEY` are set correctly on the server
 - Check spam folder in `hello@unanimw.com`
 - Make sure your email service is connected and verified
 
@@ -119,4 +123,4 @@ To send an auto-reply to the user, create a second template in EmailJS and add a
 
 ---
 
-**Important:** Keep your Service ID, Template ID, and Public Key secure. While the Public Key is meant to be public, don't share your Service ID and Template ID publicly to avoid spam.
+**Important:** Keep your server environment variables private and never hardcode EmailJS IDs in frontend code.

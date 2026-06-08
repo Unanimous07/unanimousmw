@@ -2,7 +2,8 @@ import { Component, ViewChild, ElementRef, AfterViewInit, OnDestroy, Inject, NgZ
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PLATFORM_ID } from '@angular/core';
-import emailjs from '@emailjs/browser';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-contact',
@@ -14,7 +15,50 @@ import emailjs from '@emailjs/browser';
       <div class="container">
         <div class="section-header">
           <h2>Let's Create Something Amazing</h2>
-          <p>Ready to bring your vision to life? Get in touch with us today</p>
+          <p>Ready to build your next brand, UX/UI, or web project? Choose your preferred contact channel below.</p>
+        </div>
+
+        <div class="quick-convert">
+          <a href="https://wa.me/265998997400?text=Hi%20Unanimous%20MW%2C%20I%20have%20a%20project%20to%20discuss." target="_blank" rel="noopener noreferrer" class="quick-card">
+            <span class="quick-label">Fastest</span>
+            <h3>WhatsApp Chat</h3>
+            <p>Start instantly for project scope and pricing direction.</p>
+          </a>
+          <a href="tel:+265998997400" class="quick-card">
+            <span class="quick-label">Direct</span>
+            <h3>Call Us</h3>
+            <p>Speak with the team on +265 998 997 400.</p>
+          </a>
+          <a href="mailto:hello@unanimw.com" class="quick-card">
+            <span class="quick-label">Detailed</span>
+            <h3>Email Brief</h3>
+            <p>Send requirements and references to hello@unanimw.com.</p>
+          </a>
+        </div>
+
+        <div class="trust-panel">
+          <div class="trust-metrics">
+            <div class="metric-item">
+              <strong>250+</strong>
+              <span>Projects Delivered</span>
+            </div>
+            <div class="metric-item">
+              <strong>150+</strong>
+              <span>Clients Partnered With</span>
+            </div>
+            <div class="metric-item">
+              <strong>7+ Years</strong>
+              <span>Industry Experience</span>
+            </div>
+          </div>
+          <div class="trust-process">
+            <h3>How We Deliver</h3>
+            <div class="process-steps">
+              <span class="step">1. Discovery Call</span>
+              <span class="step">2. Concept & Build</span>
+              <span class="step">3. Review & Launch</span>
+            </div>
+          </div>
         </div>
 
         <div class="contact-content">
@@ -51,16 +95,16 @@ import emailjs from '@emailjs/browser';
             <div class="social-links">
               <h4>Follow Us</h4>
               <div class="social-icons">
-                <a href="https://facebook.com/unanimous" target="_blank" class="social-icon">
+                <a href="https://web.facebook.com/unanimous.Designs" target="_blank" rel="noopener noreferrer" class="social-icon">
                   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg>
                 </a>
-                <a href="https://instagram.com/unanimous" target="_blank" class="social-icon">
+                <a href="https://instagram.com/unanimous" target="_blank" rel="noopener noreferrer" class="social-icon">
                   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/></svg>
                 </a>
-                <a href="https://twitter.com/unanimous" target="_blank" class="social-icon">
+                <a href="https://twitter.com/unanimous" target="_blank" rel="noopener noreferrer" class="social-icon">
                   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.70,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z"/></svg>
                 </a>
-                <a href="https://linkedin.com/company/unanimous" target="_blank" class="social-icon">
+                <a href="https://linkedin.com/company/unanimous" target="_blank" rel="noopener noreferrer" class="social-icon">
                   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z"/></svg>
                 </a>
               </div>
@@ -69,6 +113,7 @@ import emailjs from '@emailjs/browser';
 
           <div class="contact-form-wrapper">
           <form (ngSubmit)="onSubmit()" #contactForm="ngForm">
+            <input type="text" [(ngModel)]="formData.website" name="website" tabindex="-1" autocomplete="off" class="honeypot" aria-hidden="true" />
             <div class="form-group">
               <label>Full Name</label>
               <input type="text" class="form-control" [(ngModel)]="formData.name" name="name" required />
@@ -82,11 +127,12 @@ import emailjs from '@emailjs/browser';
               <select class="form-control" [(ngModel)]="formData.service" name="service" required>
                 <option value="">Select a service</option>
                 <option value="branding">Brand Identity Design</option>
+                <option value="ux-ui">UX/UI Design</option>
                 <option value="print">Print Design</option>
                 <option value="digital">Digital Graphics</option>
                 <option value="packaging">Packaging Design</option>
                 <option value="web">Website Development</option>
-                <option value="mobile">Mobile App Development</option>
+                <option value="web-app">Web App Development</option>
                 <option value="other">Other</option>
               </select>
             </div>
@@ -113,6 +159,7 @@ import emailjs from '@emailjs/browser';
               <span *ngIf="!isSubmitting">Send Message</span>
               <span *ngIf="isSubmitting">Sending...</span>
             </button>
+            <p class="form-note">Prefer WhatsApp? Use the green button for a faster response, usually within 24 hours.</p>
           </form>
           </div>
         </div>
@@ -139,7 +186,9 @@ import emailjs from '@emailjs/browser';
       height: 100%;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.5;
+      opacity: 0.48;
+      mix-blend-mode: normal;
+      will-change: transform, opacity;
     }
 
     .container {
@@ -174,6 +223,124 @@ import emailjs from '@emailjs/browser';
       grid-template-columns: 1fr 1fr;
       gap: 4rem;
       align-items: start;
+    }
+
+    .quick-convert {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin: 0 auto 2rem;
+      max-width: 1200px;
+    }
+
+    .quick-card {
+      display: block;
+      text-decoration: none;
+      color: white;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 14px;
+      padding: 1rem 1.1rem;
+      transition: transform 0.25s ease, background-color 0.25s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .quick-card:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .quick-label {
+      display: inline-block;
+      margin-bottom: 0.45rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #7a3000;
+      background: rgba(255, 255, 255, 0.85);
+    }
+
+    .quick-card h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .quick-card p {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      opacity: 0.95;
+    }
+
+    .trust-panel {
+      margin: 0 auto 2.2rem;
+      max-width: 1200px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: 2fr 1.2fr;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .trust-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .metric-item {
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0.7rem;
+      text-align: center;
+    }
+
+    .metric-item strong {
+      display: block;
+      font-size: 1.2rem;
+      margin-bottom: 0.2rem;
+      color: #fff;
+    }
+
+    .metric-item span {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.9);
+      letter-spacing: 0.01em;
+    }
+
+    .trust-process h3 {
+      margin: 0 0 0.45rem;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .process-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .step {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      border-radius: 999px;
+      padding: 0.2rem 0.55rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.03em;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.27);
+      color: #fff;
+      font-weight: 600;
     }
 
     .contact-info h3 {
@@ -325,6 +492,22 @@ import emailjs from '@emailjs/browser';
       cursor: not-allowed;
     }
 
+    .form-note {
+      margin: 0.75rem 0 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .honeypot {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
     .submit-message {
       padding: 1rem;
       border-radius: 10px;
@@ -364,11 +547,11 @@ import emailjs from '@emailjs/browser';
       }
 
       .container {
-        padding: 1.5rem;
+        padding: 1.25rem;
       }
 
       .section-header {
-        margin-bottom: 2.5rem;
+        margin-bottom: 2rem;
       }
 
       .section-header h2 {
@@ -381,7 +564,27 @@ import emailjs from '@emailjs/browser';
 
       .contact-content {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.5rem;
+      }
+
+      .quick-convert {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+
+      .trust-panel {
+        grid-template-columns: 1fr;
+        padding: 0.9rem;
+        gap: 0.8rem;
+      }
+
+      .trust-metrics {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+      }
+
+      .trust-process h3 {
+        margin-top: 0.2rem;
       }
 
       .contact-info h3 {
@@ -407,6 +610,14 @@ import emailjs from '@emailjs/browser';
         padding: 1.5rem;
       }
 
+      .quick-card {
+        padding: 0.95rem 1rem;
+      }
+
+      .social-icons {
+        flex-wrap: wrap;
+      }
+
       .form-control {
         font-size: 16px; /* Prevents zoom on iOS */
       }
@@ -418,7 +629,7 @@ import emailjs from '@emailjs/browser';
       }
 
       .container {
-        padding: 1rem;
+        padding: 0.9rem;
       }
 
       .section-header h2 {
@@ -426,11 +637,66 @@ import emailjs from '@emailjs/browser';
       }
 
       .contact-form-wrapper {
-        padding: 1.25rem;
+        padding: 1.1rem;
       }
 
       .form-group {
         margin-bottom: 1.25rem;
+      }
+
+      .metric-item {
+        padding: 0.9rem;
+      }
+
+      .process-steps {
+        gap: 0.6rem;
+      }
+
+      .step {
+        font-size: 0.78rem;
+      }
+
+      .quick-card h3 {
+        font-size: 1rem;
+      }
+
+      .quick-card p {
+        font-size: 0.85rem;
+      }
+
+      .trust-panel {
+        padding: 0.8rem;
+      }
+
+      .contact-item {
+        margin-bottom: 1rem;
+      }
+
+      .social-links {
+        margin-top: 2rem;
+      }
+
+      .contact-form-wrapper {
+        box-shadow: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .submit-message {
+        animation: none;
+      }
+
+      .quick-card,
+      .social-icon,
+      .btn,
+      .btn-primary:hover:not(:disabled) {
+        transition: none;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .contact-canvas {
+        opacity: 0.22;
       }
     }
   `]
@@ -453,12 +719,16 @@ export class ContactComponent implements AfterViewInit, OnDestroy {
     email: '',
     service: '',
     budget: '',
-    message: ''
+    message: '',
+    website: ''
   };
+
+  private formStartedAt = Date.now();
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private zone: NgZone
+    private zone: NgZone,
+    private http: HttpClient
   ) {}
 
   ngAfterViewInit(): void {
@@ -532,7 +802,7 @@ export class ContactComponent implements AfterViewInit, OnDestroy {
     const parent = canvas.parentElement as HTMLElement | null;
     const width = (parent?.clientWidth ?? 600);
     const height = (parent?.clientHeight ?? 400);
-    this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.dpr = Math.min(window.devicePixelRatio || 1, this.isCompactViewport() ? 1.5 : 2);
     canvas.width = Math.floor(width * this.dpr);
     canvas.height = Math.floor(height * this.dpr);
     canvas.style.width = width + 'px';
@@ -544,6 +814,10 @@ export class ContactComponent implements AfterViewInit, OnDestroy {
     const canvas = this.canvasRef?.nativeElement;
     if (!canvas) return 100;
     const area = (canvas.clientWidth || 600) * (canvas.clientHeight || 400);
+    if (this.isCompactViewport()) {
+      return Math.max(50, Math.min(90, Math.floor(area / 6000)));
+    }
+
     // More particles for better visibility: ~1 per 4000 px^2
     return Math.max(100, Math.min(250, Math.floor(area / 4000)));
   }
@@ -585,8 +859,9 @@ export class ContactComponent implements AfterViewInit, OnDestroy {
     ctx.clearRect(0, 0, w, h);
 
     // Update & draw particles
-    const mouseInfluenceRadius = 120;
-    const connectDist2 = 180 * 180; // Increased connection distance
+    const compactViewport = this.isCompactViewport();
+    const mouseInfluenceRadius = compactViewport ? 72 : 120;
+    const connectDist2 = (compactViewport ? 130 : 180) * (compactViewport ? 130 : 180);
     const mX = this.mouse.x;
     const mY = this.mouse.y;
     const mouseActive = this.mouse.active;
@@ -639,22 +914,36 @@ export class ContactComponent implements AfterViewInit, OnDestroy {
 
     // Draw particles with enhanced visibility
     for (const p of this.particles) {
-      // Main particle glow
-      const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 12);
-      glow.addColorStop(0, 'rgba(255,255,255,1)');
-      glow.addColorStop(0.3, 'rgba(255,255,255,0.8)');
+      // Soft outer halo (large, very subtle)
+      const halo = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 28);
+      halo.addColorStop(0, 'rgba(255,255,255,0.10)');
+      halo.addColorStop(0.5, 'rgba(255,255,255,0.03)');
+      halo.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = halo;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * 7, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Main particle glow (medium, bright)
+      const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 18);
+      glow.addColorStop(0, 'rgba(255,255,255,0.60)');
+      glow.addColorStop(0.35, 'rgba(255,255,255,0.40)');
       glow.addColorStop(1, 'rgba(255,255,255,0)');
       ctx.fillStyle = glow;
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, p.size * 5, 0, Math.PI * 2);
       ctx.fill();
       
-      // Core particle dot
-      ctx.fillStyle = 'rgba(255,255,255,1)';
+      // Core particle dot (bright white center)
+      ctx.fillStyle = 'rgba(255,255,255,0.70)';
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, p.size * 1.2, 0, Math.PI * 2);
       ctx.fill();
     }
+  }
+
+  private isCompactViewport(): boolean {
+    return typeof window !== 'undefined' && window.innerWidth <= 768;
   }
 
   private onMouseMove = (e: MouseEvent) => {
@@ -707,22 +996,15 @@ export class ContactComponent implements AfterViewInit, OnDestroy {
     this.submitMessage = 'Sending...';
 
     try {
-      // EmailJS configuration
-      const serviceId = 'service_wp7299b';   // Your EmailJS Service ID
-      const templateId = 'template_g6hsj5v'; // Your EmailJS Template ID
-      const publicKey = 'Ali-m3dN70OtbQ5B-'; // Your EmailJS Public Key
-
-      const templateParams = {
-        to_email: 'hello@unanimw.com',
-        from_name: this.formData.name,
-        from_email: this.formData.email,
+      await firstValueFrom(this.http.post('/api/contact', {
+        name: this.formData.name,
+        email: this.formData.email,
         service: this.formData.service,
         budget: this.formData.budget,
         message: this.formData.message,
-        reply_to: this.formData.email
-      };
-
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+        website: this.formData.website,
+        elapsedMs: Date.now() - this.formStartedAt
+      }));
       
       this.submitMessage = '✅ Thank you! Your message has been sent successfully.';
       
@@ -732,8 +1014,10 @@ export class ContactComponent implements AfterViewInit, OnDestroy {
         email: '',
         service: '',
         budget: '',
-        message: ''
+        message: '',
+        website: ''
       };
+      this.formStartedAt = Date.now();
 
       // Clear success message after 5 seconds
       setTimeout(() => {
@@ -741,8 +1025,14 @@ export class ContactComponent implements AfterViewInit, OnDestroy {
       }, 5000);
 
     } catch (error) {
-      console.error('EmailJS Error:', error);
-      this.submitMessage = '❌ Oops! Something went wrong. Please try again or email us directly at hello@unanimw.com';
+      console.error('Contact form error:', error);
+      const fallbackUrl = this.buildMailtoFallback();
+      if (typeof window !== 'undefined' && fallbackUrl) {
+        window.location.href = fallbackUrl;
+        this.submitMessage = '⚠️ The direct form is unavailable here. Your email app is opening with a prefilled message.';
+      } else {
+        this.submitMessage = '❌ Oops! Something went wrong. Please try again or email us directly at hello@unanimw.com';
+      }
       
       // Clear error message after 8 seconds
       setTimeout(() => {
@@ -751,5 +1041,19 @@ export class ContactComponent implements AfterViewInit, OnDestroy {
     } finally {
       this.isSubmitting = false;
     }
+  }
+
+  private buildMailtoFallback(): string {
+    const subject = encodeURIComponent(`Project inquiry from ${this.formData.name || 'website visitor'}`);
+    const lines = [
+      `Name: ${this.formData.name}`,
+      `Email: ${this.formData.email}`,
+      `Service: ${this.formData.service}`,
+      `Budget: ${this.formData.budget || 'Not specified'}`,
+      '',
+      this.formData.message
+    ];
+    const body = encodeURIComponent(lines.join('\n'));
+    return `mailto:hello@unanimw.com?subject=${subject}&body=${body}`;
   }
 }

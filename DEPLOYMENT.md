@@ -70,6 +70,9 @@ For self-hosting with SSR:
    ```bash
    PORT=3000
    NODE_ENV=production
+   EMAILJS_SERVICE_ID=service_xxxxxxx
+   EMAILJS_TEMPLATE_ID=template_xxxxxxx
+   EMAILJS_PUBLIC_KEY=xxxxxxxxxxxxxx
    ```
 
 ## Build Scripts
@@ -87,6 +90,9 @@ Create a `.env.production` file:
 ```
 API_URL=https://api.unanimw.com
 CONTACT_EMAIL=hello@unanimw.com
+EMAILJS_SERVICE_ID=service_xxxxxxx
+EMAILJS_TEMPLATE_ID=template_xxxxxxx
+EMAILJS_PUBLIC_KEY=xxxxxxxxxxxxxx
 ```
 
 ## Pre-Deployment Checklist
