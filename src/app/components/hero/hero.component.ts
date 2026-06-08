@@ -37,7 +37,7 @@ import { PLATFORM_ID } from '@angular/core';
             <a href="#contact" (click)="scrollTo($event, '#contact')" class="btn btn-secondary">Request Proposal</a>
             <a href="#portfolio" class="btn btn-ghost">See Case Studies</a>
           </div>
-          <p class="hero-microcopy">Most client inquiries get a response within 24 hours.</p>
+          <p class="hero-microcopy">Most clients inquiries get a response within 24 hours.</p>
         </div>
         <div class="hero-visual" #heroVisual>
           <div class="hero-depth-layer" aria-hidden="true"></div>
